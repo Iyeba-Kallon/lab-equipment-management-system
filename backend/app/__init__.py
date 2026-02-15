@@ -1,14 +1,6 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_cors import CORS
-from flask_jwt_extended import JWTManager
 from backend.config import DevelopmentConfig
-
-db = SQLAlchemy()
-migrate = Migrate()
-jwt = JWTManager()
-cors = CORS()
+from backend.app.extensions import db, migrate, jwt, cors
 
 def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
@@ -20,9 +12,14 @@ def create_app(config_class=DevelopmentConfig):
     jwt.init_app(app)
     cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
 
-    # Register blueprints (to be created later)
-    # from app.routes import auth, equipment, reservations
-    # app.register_blueprint(auth.bp)
+    # Register blueprints
+    from backend.app.routes import auth, equipment, reservations, calibrations, analytics, users
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(equipment.bp)
+    app.register_blueprint(reservations.bp)
+    app.register_blueprint(calibrations.bp)
+    app.register_blueprint(analytics.bp)
+    app.register_blueprint(users.bp)
     
     @app.route('/health')
     def health_check():
