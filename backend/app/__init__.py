@@ -1,14 +1,6 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_cors import CORS
-from flask_jwt_extended import JWTManager
 from backend.config import DevelopmentConfig
-
-db = SQLAlchemy()
-migrate = Migrate()
-jwt = JWTManager()
-cors = CORS()
+from backend.app.extensions import db, migrate, jwt, cors
 
 def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
