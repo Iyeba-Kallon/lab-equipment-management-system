@@ -12,9 +12,10 @@ def create_app(config_class=DevelopmentConfig):
     jwt.init_app(app)
     cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
 
-    # Register blueprints (to be created later)
-    # from app.routes import auth, equipment, reservations
-    # app.register_blueprint(auth.bp)
+    # Register blueprints
+    from backend.app.routes import auth, equipment
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(equipment.bp)
     
     @app.route('/health')
     def health_check():
