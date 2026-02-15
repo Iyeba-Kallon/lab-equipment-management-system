@@ -13,9 +13,13 @@ def create_app(config_class=DevelopmentConfig):
     cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
 
     # Register blueprints
-    from backend.app.routes import auth, equipment
+    from backend.app.routes import auth, equipment, reservations, calibrations, analytics, users
     app.register_blueprint(auth.bp)
     app.register_blueprint(equipment.bp)
+    app.register_blueprint(reservations.bp)
+    app.register_blueprint(calibrations.bp)
+    app.register_blueprint(analytics.bp)
+    app.register_blueprint(users.bp)
     
     @app.route('/health')
     def health_check():
