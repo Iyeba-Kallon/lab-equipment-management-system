@@ -35,7 +35,7 @@ const Scanner: React.FC = () => {
                     setError("Invalid QR code format. Please scan a LabOps asset tag.");
                 }
             },
-            (errorMessage) => {
+            () => {
                 // Error callback (ignoring for cleaner UX unless critical)
                 // console.warn(errorMessage);
             }
