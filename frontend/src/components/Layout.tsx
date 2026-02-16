@@ -12,7 +12,8 @@ import {
     History,
     Activity,
     BarChart3,
-    Wrench
+    Wrench,
+    QrCode
 } from 'lucide-react';
 import { NavLink, Link } from 'react-router-dom';
 
@@ -31,6 +32,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         { icon: <BarChart3 size={20} />, label: 'Analytics', path: '/analytics' },
         { icon: <Activity size={20} />, label: 'Usage Logs', path: '/usage-logs' },
         { icon: <History size={20} />, label: 'Maintenance', path: '/maintenance' },
+        { icon: <QrCode size={20} />, label: 'Scanner', path: '/scanner' },
     ];
 
     return (

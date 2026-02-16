@@ -8,8 +8,10 @@ import {
     Calendar,
     FileText,
     ExternalLink,
-    ShieldCheck
+    ShieldCheck,
+    QrCode
 } from 'lucide-react';
+import { QRCodeCanvas } from 'qrcode.react';
 
 const EquipmentDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -205,6 +207,26 @@ const EquipmentDetail: React.FC = () => {
                             <Calendar size={18} />
                             REQUEST ACCESS
                         </button>
+                    </div>
+
+                    <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 space-y-6 shadow-sm group">
+                        <div className="flex items-center gap-3">
+                            <QrCode size={20} className="text-blue-600" />
+                            <h3 className="text-lg font-bold text-slate-800 dark:text-white">Asset Tag</h3>
+                        </div>
+                        <div className="flex flex-col items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700">
+                            <div className="p-4 bg-white rounded-xl shadow-sm">
+                                <QRCodeCanvas
+                                    value={`labops://equipment/${id}`}
+                                    size={140}
+                                    level="H"
+                                    includeMargin={false}
+                                />
+                            </div>
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">
+                                Scan to view on mobile or verify asset
+                            </p>
+                        </div>
                     </div>
 
                     <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 space-y-6 shadow-sm group">
