@@ -15,6 +15,33 @@ def get_reservations():
 @bp.route('', methods=['POST'])
 @jwt_required()
 def create_reservation():
-    # TODO: Add conflict detection
+    from datetime import datetime
     data = request.get_json()
-    return jsonify({'message': 'Not implemented'}), 501
+    user_id = get_jwt_identity()
+    equipment_id = data.get('equipment_id')
+    start_time = datetime.fromisoformat(data.get('start_time'))
+    end_time = datetime.fromisoformat(data.get('end_time'))
+    
+    # Check for conflicts
+    conflict = Reservation.query.filter(
+        Reservation.equipment_id == equipment_id,
+        Reservation.status.in_(['pending', 'approved', 'active']),
+        Reservation.start_time < end_time,
+        Reservation.end_time > start_time
+    ).first()
+    
+    if conflict:
+        return jsonify({'message': 'Equipment is already reserved for the selected time period'}), 409
+        
+    reservation = Reservation(
+        equipment_id=equipment_id,
+        user_id=user_id,
+        start_time=start_time,
+        end_time=end_time,
+        purpose=data.get('purpose'),
+        project_name=data.get('project_name')
+    )
+    db.session.add(reservation)
+    db.session.commit()
+    
+    return jsonify(reservation.to_dict()), 201
