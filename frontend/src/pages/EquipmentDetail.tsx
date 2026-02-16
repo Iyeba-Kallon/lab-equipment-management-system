@@ -6,9 +6,7 @@ import {
     Settings,
     History,
     Calendar,
-    Wrench,
     FileText,
-    AlertCircle,
     ExternalLink,
     ShieldCheck
 } from 'lucide-react';
