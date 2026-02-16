@@ -14,7 +14,7 @@ import {
     BarChart3,
     Wrench
 } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -72,10 +72,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </nav>
 
                 <div className="absolute bottom-6 w-full px-3 space-y-1">
-                    <button className="w-full flex items-center gap-4 px-4 py-3 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all duration-200">
+                    <NavLink to="/profile" className={({ isActive }) => `w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-blue-600 text-white' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'}`}>
                         <Settings size={20} />
                         {isSidebarOpen && <span className="font-medium">Settings</span>}
-                    </button>
+                    </NavLink>
                     <button className="w-full flex items-center gap-4 px-4 py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-xl transition-all duration-200">
                         <LogOut size={20} />
                         {isSidebarOpen && <span className="font-medium">Logout</span>}
@@ -97,7 +97,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             </button>
                         </div>
 
-                        <div className="flex items-center gap-3 pl-6 border-l border-slate-200 dark:border-slate-800">
+                        <Link to="/profile" className="flex items-center gap-3 pl-6 border-l border-slate-200 dark:border-slate-800 hover:opacity-80 transition-opacity">
                             <div className="text-right hidden sm:block">
                                 <p className="text-sm font-semibold text-slate-800 dark:text-white">Admin User</p>
                                 <p className="text-xs text-slate-500 dark:text-slate-400 underline decoration-slate-400 underline-offset-3">Physics Dept.</p>
@@ -105,7 +105,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             <div className="w-10 h-10 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center text-slate-600 dark:text-slate-300 border-2 border-white dark:border-slate-800 ring-2 ring-blue-500/20 shadow-sm overflow-hidden">
                                 <User size={24} />
                             </div>
-                        </div>
+                        </Link>
                     </div>
                 </header>
 
