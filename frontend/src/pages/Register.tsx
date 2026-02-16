@@ -3,12 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserPlus, Mail, Lock, User, Building2, ArrowRight } from 'lucide-react';
 
 const Register: React.FC = () => {
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: '',
-        department: ''
-    });
     const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent) => {
