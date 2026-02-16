@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-    BarChart3,
     TrendingUp,
-    Activity,
     ArrowUpRight,
     ArrowDownRight,
     PieChart as PieChartIcon,
