@@ -7,8 +7,7 @@ import {
     List,
     MoreVertical,
     ExternalLink,
-    MapPin,
-    Calendar
+    MapPin
 } from 'lucide-react';
 
 const mockEquipment = [

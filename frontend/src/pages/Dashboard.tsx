@@ -3,7 +3,6 @@ import {
     Box,
     Calendar,
     AlertCircle,
-    ArrowUpRight,
     Users,
     CheckCircle2,
     Clock

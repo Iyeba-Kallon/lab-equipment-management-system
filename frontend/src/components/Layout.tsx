@@ -14,6 +14,7 @@ import {
     BarChart3,
     Wrench
 } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -23,13 +24,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
     const menuItems = [
-        { icon: <LayoutDashboard size={20} />, label: 'Dashboard', active: true },
-        { icon: <Box size={20} />, label: 'Inventory' },
-        { icon: <Calendar size={20} />, label: 'Reservations' },
-        { icon: <Wrench size={20} />, label: 'Calibration' },
-        { icon: <BarChart3 size={20} />, label: 'Analytics' },
-        { icon: <Activity size={20} />, label: 'Usage Logs' },
-        { icon: <History size={20} />, label: 'Maintenance' },
+        { icon: <LayoutDashboard size={20} />, label: 'Dashboard', path: '/dashboard' },
+        { icon: <Box size={20} />, label: 'Inventory', path: '/inventory' },
+        { icon: <Calendar size={20} />, label: 'Reservations', path: '/reservations' },
+        { icon: <Wrench size={20} />, label: 'Calibration', path: '/calibration' },
+        { icon: <BarChart3 size={20} />, label: 'Analytics', path: '/analytics' },
+        { icon: <Activity size={20} />, label: 'Usage Logs', path: '/usage-logs' },
+        { icon: <History size={20} />, label: 'Maintenance', path: '/maintenance' },
     ];
 
     return (
@@ -42,13 +43,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <div className="p-6 flex items-center justify-between">
                     {isSidebarOpen && (
                         <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">L</div>
+                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">L</div>
                             <span className="font-bold text-xl tracking-tight text-slate-800 dark:text-white">LabOps</span>
                         </div>
                     )}
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                        className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-100 dark:border-slate-800 shadow-sm"
                     >
                         {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
                     </button>
@@ -56,16 +57,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
                 <nav className="mt-4 px-3 space-y-1">
                     {menuItems.map((item, index) => (
-                        <button
+                        <NavLink
                             key={index}
-                            className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${item.active
-                                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 dark:shadow-none'
-                                    : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-400'
+                            to={item.path}
+                            className={({ isActive }) => `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
+                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 dark:shadow-none'
+                                : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-400 font-medium'
                                 }`}
                         >
                             {item.icon}
-                            {isSidebarOpen && <span className="font-medium">{item.label}</span>}
-                        </button>
+                            {isSidebarOpen && <span>{item.label}</span>}
+                        </NavLink>
                     ))}
                 </nav>
 
