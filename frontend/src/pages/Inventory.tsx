@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Search,
     Filter,
@@ -100,9 +101,9 @@ const Inventory: React.FC = () => {
                                 </div>
 
                                 <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                                    <button className="text-blue-600 text-xs font-bold flex items-center gap-1 hover:underline">
+                                    <Link to={`/inventory/${item.id}`} className="text-blue-600 text-xs font-bold flex items-center gap-1 hover:underline">
                                         VIEW DETAILS <ExternalLink size={12} />
-                                    </button>
+                                    </Link>
                                     <button className="px-4 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-lg text-xs font-bold hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors">
                                         RESERVE
                                     </button>
