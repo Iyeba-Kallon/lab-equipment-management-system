@@ -4,6 +4,8 @@ import Dashboard from './pages/Dashboard';
 import Inventory from './pages/Inventory';
 import EquipmentDetail from './pages/EquipmentDetail';
 import Reservations from './pages/Reservations';
+import Calibration from './pages/Calibration';
+import Analytics from './pages/Analytics';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -29,6 +31,8 @@ function App() {
                   <Route path="/inventory" element={<Inventory />} />
                   <Route path="/inventory/:id" element={<EquipmentDetail />} />
                   <Route path="/reservations" element={<Reservations />} />
+                  <Route path="/calibration" element={<Calibration />} />
+                  <Route path="/analytics" element={<Analytics />} />
                   {/* Add more protected routes here */}
                 </Routes>
               </Layout>

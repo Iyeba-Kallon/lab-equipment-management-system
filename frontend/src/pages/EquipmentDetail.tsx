@@ -15,6 +15,7 @@ import {
 
 const EquipmentDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
+    console.log('Viewing Equipment:', id);
     const [activeTab, setActiveTab] = useState('overview');
 
     // Mock data for the specific equipment
@@ -102,8 +103,8 @@ const EquipmentDetail: React.FC = () => {
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id)}
                                         className={`flex items-center gap-2 px-6 py-4 text-sm font-bold transition-all border-b-2 whitespace-nowrap ${activeTab === tab.id
-                                                ? 'border-blue-600 text-blue-600'
-                                                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                                            ? 'border-blue-600 text-blue-600'
+                                            : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
                                             }`}
                                     >
                                         {tab.icon}
