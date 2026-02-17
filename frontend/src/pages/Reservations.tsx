@@ -1,4 +1,3 @@
-```javascript
 import React, { useState } from 'react';
 import {
     Calendar,
@@ -111,11 +110,10 @@ const Reservations: React.FC = () => {
                         <button
                             key={t}
                             onClick={() => setFilter(t)}
-                            className={`pb - 5 text - [11px] font - black uppercase tracking - [0.2em] transition - all border - b - 2 relative shrink - 0 ${
-    filter === t
-    ? 'border-blue-600 text-blue-600'
-    : 'border-transparent text-slate-400 hover:text-slate-900 dark:hover:text-white'
-} `}
+                            className={`pb-5 text-[11px] font-black uppercase tracking-[0.2em] transition-all border-b-2 relative shrink-0 ${filter === t
+                                ? 'border-blue-600 text-blue-600'
+                                : 'border-transparent text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                                }`}
                         >
                             {t}
                             {filter === t && (
@@ -147,7 +145,7 @@ const Reservations: React.FC = () => {
                                 <div className="space-y-3">
                                     <div className="flex flex-wrap items-center gap-4">
                                         <h3 className="text-2xl font-black text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors tracking-tight">{res.equipment}</h3>
-                                        <span className={`px - 3 py - 1 rounded - lg text - [9px] font - black uppercase tracking - widest flex items - center gap - 2 ${ getStatusStyle(res.status) } `}>
+                                        <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest flex items-center gap-2 ${getStatusStyle(res.status)}`}>
                                             {getStatusIcon(res.status)}
                                             {res.status}
                                         </span>
