@@ -1,3 +1,4 @@
+```javascript
 import React, { useState } from 'react';
 import {
     Calendar,
@@ -9,7 +10,8 @@ import {
     Plus,
     Search,
     Filter,
-    ArrowRight
+    ArrowRight,
+    User
 } from 'lucide-react';
 
 const Reservations: React.FC = () => {
@@ -56,110 +58,119 @@ const Reservations: React.FC = () => {
 
     const getStatusStyle = (status: string) => {
         switch (status) {
-            case 'Active': return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200 dark:border-blue-800';
-            case 'Upcoming': return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800';
-            case 'Completed': return 'bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-400 border-slate-200 dark:border-slate-800';
-            case 'Cancelled': return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 border-red-200 dark:border-red-800';
-            default: return 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400 border-gray-200 dark:border-gray-800';
+            case 'Active': return 'bg-blue-600 text-white shadow-lg shadow-blue-500/20';
+            case 'Upcoming': return 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20';
+            case 'Completed': return 'bg-slate-500 text-white';
+            case 'Cancelled': return 'bg-rose-500 text-white shadow-lg shadow-rose-500/20';
+            default: return 'bg-slate-200 text-slate-600';
         }
     };
 
     const getStatusIcon = (status: string) => {
         switch (status) {
-            case 'Active': return <Clock size={14} />;
-            case 'Upcoming': return <Calendar size={14} />;
-            case 'Completed': return <CheckCircle2 size={14} />;
-            case 'Cancelled': return <XCircle size={14} />;
-            default: return <AlertCircle size={14} />;
+            case 'Active': return <Clock size={12} />;
+            case 'Upcoming': return <Calendar size={12} />;
+            case 'Completed': return <CheckCircle2 size={12} />;
+            case 'Cancelled': return <XCircle size={12} />;
+            default: return <AlertCircle size={12} />;
         }
     };
 
     return (
-        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000 font-['Outfit']">
             {/* Header & Actions */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                <div>
-                    <h1 className="text-2xl font-extrabold text-slate-800 dark:text-white">Reservations</h1>
-                    <p className="text-sm text-slate-500 mt-1">Manage and track equipment bookings</p>
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 bg-white dark:bg-slate-900/50 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/20 dark:shadow-none relative overflow-hidden group">
+                <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl group-hover:bg-blue-600/10 transition-colors duration-1000"></div>
+
+                <div className="space-y-4 relative z-10">
+                    <div className="inline-flex px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] border border-blue-100 dark:border-blue-800">Operational Log</div>
+                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Reservations</h1>
+                    <p className="text-slate-500 dark:text-slate-400 font-medium text-lg">Detailed history and upcoming equipment allocations.</p>
                 </div>
 
-                <div className="flex items-center gap-3 w-full md:w-auto">
-                    <div className="relative flex-1 md:flex-none md:w-64">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto relative z-10">
+                    <div className="relative flex-1 min-w-[200px]">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                         <input
                             type="text"
-                            placeholder="Search bookings..."
-                            className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border-none rounded-xl outline-none focus:ring-2 focus:ring-blue-500 shadow-inner text-sm transition-all"
+                            placeholder="Find a reservation..."
+                            className="w-full pl-12 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border border-transparent focus:border-blue-500/30 rounded-2xl outline-none focus:ring-4 focus:ring-blue-500/5 font-bold text-sm transition-all"
                         />
                     </div>
-                    <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-xl font-bold shadow-lg shadow-blue-200 dark:shadow-none hover:bg-blue-700 transition-all text-sm shrink-0">
-                        <Plus size={18} />
+                    <button className="flex items-center gap-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 rounded-2xl font-black shadow-2xl hover:bg-slate-800 dark:hover:bg-slate-100 hover:scale-[1.02] active:scale-95 transition-all text-xs uppercase tracking-widest shrink-0">
+                        <Plus size={20} />
                         New Booking
                     </button>
                 </div>
             </div>
 
             {/* Tabs & Filters */}
-            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
-                <div className="flex gap-8">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 px-6">
+                <div className="flex gap-10">
                     {['all', 'active', 'upcoming', 'history'].map((t) => (
                         <button
                             key={t}
                             onClick={() => setFilter(t)}
-                            className={`pb-4 text-sm font-bold uppercase tracking-wider transition-all border-b-2 ${filter === t
-                                    ? 'border-blue-600 text-blue-600'
-                                    : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
-                                }`}
+                            className={`pb - 5 text - [11px] font - black uppercase tracking - [0.2em] transition - all border - b - 2 relative shrink - 0 ${
+    filter === t
+    ? 'border-blue-600 text-blue-600'
+    : 'border-transparent text-slate-400 hover:text-slate-900 dark:hover:text-white'
+} `}
                         >
                             {t}
+                            {filter === t && (
+                                <div className="absolute inset-0 bg-blue-50/50 dark:bg-blue-900/10 rounded-t-xl -z-10 animate-in fade-in duration-500"></div>
+                            )}
                         </button>
                     ))}
                 </div>
-                <button className="flex items-center gap-2 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-colors pb-4">
+                <button className="hidden sm:flex items-center gap-2 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors pb-5">
                     <Filter size={16} />
-                    <span className="text-xs font-bold uppercase tracking-widest">Filter</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">Advanced Filter</span>
                 </button>
             </div>
 
             {/* Reservations List */}
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-6">
                 {reservations.map((res) => (
                     <div
                         key={res.id}
-                        className="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none transition-all duration-300"
+                        className="premium-card group bg-white dark:bg-slate-900/50 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-8 hover:border-blue-500/30 transition-all duration-500"
                     >
-                        <div className="flex flex-col md:flex-row justify-between gap-6">
-                            <div className="flex gap-5">
-                                <div className="w-14 h-14 bg-slate-100 dark:bg-slate-800 rounded-2xl flex flex-col items-center justify-center border border-slate-200 dark:border-slate-800 shadow-sm shrink-0 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 transition-colors">
-                                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-tighter">FEB</span>
-                                    <span className="text-xl font-black text-slate-800 dark:text-white leading-none mt-1">{res.start.split('-')[2].split(' ')[0]}</span>
+                        <div className="flex flex-col lg:flex-row justify-between gap-10">
+                            <div className="flex gap-8">
+                                <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800/50 rounded-3xl flex flex-col items-center justify-center border border-slate-100 dark:border-slate-800 shadow-sm shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 group-hover:rotate-3 group-hover:scale-110">
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">FEB</span>
+                                    <span className="text-3xl font-black leading-none mt-1">{res.start.split('-')[2].split(' ')[0]}</span>
                                 </div>
 
-                                <div className="space-y-1">
-                                    <div className="flex items-center gap-2">
-                                        <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">{res.equipment}</h3>
-                                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 border ${getStatusStyle(res.status)}`}>
+                                <div className="space-y-3">
+                                    <div className="flex flex-wrap items-center gap-4">
+                                        <h3 className="text-2xl font-black text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors tracking-tight">{res.equipment}</h3>
+                                        <span className={`px - 3 py - 1 rounded - lg text - [9px] font - black uppercase tracking - widest flex items - center gap - 2 ${ getStatusStyle(res.status) } `}>
                                             {getStatusIcon(res.status)}
                                             {res.status}
                                         </span>
                                     </div>
-                                    <p className="text-sm font-medium text-slate-500 flex items-center gap-4">
-                                        <span className="flex items-center gap-1.5"><Clock size={14} /> {res.start.split(' ')[1]} - {res.end.split(' ')[1]}</span>
-                                        <span className="flex items-center gap-1.5 font-bold text-blue-500/80"><span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span> {res.project}</span>
-                                    </p>
-                                    <p className="text-xs text-slate-400 font-medium">Reserved by <span className="text-slate-600 dark:text-slate-300 font-bold">{res.user}</span></p>
+                                    <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-sm font-bold text-slate-500 dark:text-slate-400">
+                                        <span className="flex items-center gap-3"><Clock size={16} className="text-blue-500" /> {res.start.split(' ')[1]} - {res.end.split(' ')[1]}</span>
+                                        <span className="flex items-center gap-3"><span className="w-2 h-2 rounded-full bg-blue-500"></span> {res.project}</span>
+                                        <span className="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest">
+                                            <User size={14} className="text-slate-400" /> {res.user}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-3 md:self-center border-t md:border-t-0 pt-4 md:pt-0 border-slate-100 dark:border-slate-800">
+                            <div className="flex items-center gap-4 lg:self-center border-t lg:border-t-0 pt-6 lg:pt-0 border-slate-100 dark:border-slate-800">
                                 {res.status === 'Upcoming' && (
                                     <>
-                                        <button className="flex-1 md:flex-none text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 px-4 py-2 rounded-xl transition-all">Cancel</button>
-                                        <button className="flex-1 md:flex-none text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 px-4 py-2 rounded-xl transition-all border border-slate-200 dark:border-slate-800">Reschedule</button>
+                                        <button className="flex-1 lg:flex-none text-xs font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20 px-6 py-3 rounded-xl transition-all">Cancel</button>
+                                        <button className="flex-1 lg:flex-none text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 px-6 py-3 rounded-xl transition-all border border-slate-100 dark:border-slate-700">Reschedule</button>
                                     </>
                                 )}
-                                <button className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">
-                                    <MoreVertical size={18} />
+                                <button className="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100">
+                                    <MoreVertical size={22} />
                                 </button>
                             </div>
                         </div>
@@ -169,21 +180,22 @@ const Reservations: React.FC = () => {
 
             {/* Empty State Mock */}
             {reservations.length === 0 && (
-                <div className="py-20 text-center space-y-4">
-                    <div className="inline-flex items-center justify-center w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-full text-slate-300">
-                        <Calendar size={40} />
+                <div className="py-24 text-center space-y-8 bg-slate-50 dark:bg-slate-900/30 rounded-[3rem] border border-dashed border-slate-200 dark:border-slate-800">
+                    <div className="inline-flex items-center justify-center w-24 h-24 bg-white dark:bg-slate-800 rounded-[2.5rem] text-slate-200 shadow-sm border border-slate-100 dark:border-slate-800">
+                        <Calendar size={48} />
                     </div>
-                    <div>
-                        <h3 className="text-lg font-bold text-slate-800 dark:text-white">No reservations found</h3>
-                        <p className="text-sm text-slate-500">Try adjusting your filters or make a new booking.</p>
+                    <div className="space-y-2">
+                        <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">No records found</h3>
+                        <p className="text-slate-500 font-medium text-lg">There are no reservations matching your current search parameters.</p>
                     </div>
                 </div>
             )}
 
-            <div className="pt-8 flex justify-center">
-                <button className="flex items-center gap-2 text-sm font-bold text-blue-600 hover:gap-3 transition-all">
-                    View Full Calendar View
-                    <ArrowRight size={16} />
+            <div className="pt-10 flex flex-col items-center gap-6">
+                <div className="h-px w-24 bg-slate-100 dark:bg-slate-800"></div>
+                <button className="flex items-center gap-3 text-sm font-black uppercase tracking-[0.2em] text-blue-600 hover:gap-5 transition-all group">
+                    View Enterprise Calendar
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </button>
             </div>
         </div>

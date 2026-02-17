@@ -15,7 +15,6 @@ import { QRCodeCanvas } from 'qrcode.react';
 
 const EquipmentDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
-    console.log('Viewing Equipment:', id);
     const [activeTab, setActiveTab] = useState('overview');
 
     // Mock data for the specific equipment
@@ -28,7 +27,7 @@ const EquipmentDetail: React.FC = () => {
         serial: 'TEK-99283-X',
         status: 'Available',
         location: 'Lab A, Bench 4',
-        image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800',
+        image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200',
         description: 'High-performance oscilloscope with 2.5 GHz bandwidth and 10 GS/s sample rate. Ideal for complex signal analysis and debugging of high-speed digital designs.',
         specs: {
             'Bandwidth': '2.5 GHz',
@@ -54,91 +53,99 @@ const EquipmentDetail: React.FC = () => {
     ];
 
     return (
-        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <Link to="/inventory" className="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors group">
+        <div className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            <Link to="/inventory" className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-all group font-bold px-4 py-2 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
                 <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-                <span className="text-sm font-semibold">Back to Inventory</span>
+                <span className="text-xs uppercase tracking-widest">Back to Inventory</span>
             </Link>
 
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
                 {/* Left Column: Image and Main Info */}
-                <div className="xl:col-span-2 space-y-8">
-                    <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
-                        <div className="aspect-video w-full relative group">
-                            <img src={equipment.image} alt={equipment.name} className="w-full h-full object-cover" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
-                                <button className="bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-white/30 transition-all">
-                                    Full Preview <ExternalLink size={14} />
-                                </button>
+                <div className="xl:col-span-2 space-y-10">
+                    <div className="premium-card rounded-[3rem] overflow-hidden bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/50">
+                        <div className="aspect-[21/9] w-full relative group overflow-hidden">
+                            <img src={equipment.image} alt={equipment.name} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-end p-10">
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-3">
+                                        <span className="px-3 py-1 bg-blue-600 text-white rounded-lg text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-blue-500/20">{equipment.category}</span>
+                                        <span className="px-3 py-1 bg-emerald-500 text-white rounded-lg text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-emerald-500/20">{equipment.status}</span>
+                                    </div>
+                                    <h1 className="text-4xl font-extrabold text-white leading-tight tracking-tight">{equipment.name}</h1>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="p-8">
-                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                                <div>
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <span className="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-[10px] font-bold uppercase tracking-widest">{equipment.category}</span>
-                                        <span className="px-3 py-1 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full text-[10px] font-bold uppercase tracking-widest">{equipment.status}</span>
-                                    </div>
-                                    <h1 className="text-3xl font-extrabold text-slate-800 dark:text-white leading-tight">{equipment.name}</h1>
-                                    <p className="text-slate-500 dark:text-slate-400 mt-2 font-medium flex items-center gap-2">
-                                        {equipment.manufacturer} <span className="w-1 h-1 bg-slate-300 rounded-full"></span> {equipment.model}
+                        <div className="p-10">
+                            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+                                <div className="space-y-2">
+                                    <p className="text-slate-500 dark:text-slate-400 font-bold flex items-center gap-3 uppercase tracking-widest text-xs">
+                                        {equipment.manufacturer} <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> {equipment.model}
                                     </p>
+                                    <div className="flex items-center gap-4 text-slate-400 text-sm font-medium">
+                                        <div className="flex items-center gap-2">
+                                            <MapPin size={16} className="text-blue-500" />
+                                            {equipment.location}
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div className="flex items-center gap-3">
-                                    <button className="flex-1 md:flex-none px-8 py-3 bg-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-200 dark:shadow-none hover:bg-blue-700 hover:scale-[1.02] transition-all">
+                                <div className="flex items-center gap-4">
+                                    <button className="flex-1 lg:flex-none px-10 py-4 bg-blue-600 text-white rounded-[1.25rem] font-black tracking-wide shadow-xl shadow-blue-500/30 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 transition-all text-sm uppercase">
                                         Reserve Now
                                     </button>
-                                    <button className="p-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-2xl hover:bg-slate-200 transition-colors">
-                                        <Calendar size={20} />
+                                    <button className="p-4 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-[1.25rem] hover:bg-slate-200 dark:hover:bg-slate-700 transition-all shadow-sm">
+                                        <Calendar size={22} />
                                     </button>
                                 </div>
                             </div>
 
                             {/* Tabs Navigation */}
-                            <div className="flex gap-2 border-b border-slate-100 dark:border-slate-800 mt-12 overflow-x-auto no-scrollbar">
+                            <div className="flex gap-2 border-b border-slate-100 dark:border-slate-800 mt-16 overflow-x-auto no-scrollbar scroll-smooth">
                                 {tabs.map((tab) => (
                                     <button
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id)}
-                                        className={`flex items-center gap-2 px-6 py-4 text-sm font-bold transition-all border-b-2 whitespace-nowrap ${activeTab === tab.id
+                                        className={`flex items-center gap-3 px-8 py-5 text-[11px] font-black uppercase tracking-[0.2em] transition-all border-b-2 whitespace-nowrap relative ${activeTab === tab.id
                                             ? 'border-blue-600 text-blue-600'
-                                            : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                                            : 'border-transparent text-slate-400 hover:text-slate-900 dark:hover:text-white'
                                             }`}
                                     >
-                                        {tab.icon}
+                                        <span className={`${activeTab === tab.id ? 'scale-110' : 'scale-100'} transition-transform`}>{tab.icon}</span>
                                         {tab.label}
+                                        {activeTab === tab.id && (
+                                            <div className="absolute inset-0 bg-blue-50/30 dark:bg-blue-900/10 rounded-t-xl -z-10 animate-in fade-in zoom-in-95 duration-500"></div>
+                                        )}
                                     </button>
                                 ))}
                             </div>
 
                             {/* Tab Content */}
-                            <div className="py-8">
+                            <div className="py-12">
                                 {activeTab === 'overview' && (
-                                    <div className="space-y-8 animate-in fade-in duration-300">
-                                        <div>
-                                            <h4 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-wider mb-3">About this equipment</h4>
-                                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">{equipment.description}</p>
+                                    <div className="space-y-10 animate-in fade-in slide-in-from-left-4 duration-500">
+                                        <div className="space-y-4">
+                                            <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Equipment Description</h4>
+                                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl text-lg font-medium">{equipment.description}</p>
                                         </div>
 
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                            <div className="flex gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
-                                                <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-blue-600 shadow-sm shrink-0">
-                                                    <MapPin size={20} />
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                                            <div className="flex gap-5 p-6 rounded-[2rem] bg-slate-50/80 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 group hover:shadow-lg transition-all duration-500">
+                                                <div className="w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-blue-600 shadow-sm shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all">
+                                                    <MapPin size={24} />
                                                 </div>
-                                                <div>
-                                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Current Location</p>
-                                                    <p className="text-sm font-bold text-slate-800 dark:text-white">{equipment.location}</p>
+                                                <div className="space-y-1">
+                                                    <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Storage & Lab Bin</p>
+                                                    <p className="text-base font-bold text-slate-900 dark:text-white leading-tight">{equipment.location}</p>
                                                 </div>
                                             </div>
-                                            <div className="flex gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
-                                                <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-emerald-600 shadow-sm shrink-0">
-                                                    <ShieldCheck size={20} />
+                                            <div className="flex gap-5 p-6 rounded-[2rem] bg-slate-50/80 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 group hover:shadow-lg transition-all duration-500">
+                                                <div className="w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-emerald-600 shadow-sm shrink-0 group-hover:scale-110 group-hover:-rotate-3 transition-all">
+                                                    <ShieldCheck size={24} />
                                                 </div>
-                                                <div>
-                                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Calibration Status</p>
-                                                    <p className="text-sm font-bold text-slate-800 dark:text-white">{equipment.calibration.status} (Valid until {equipment.calibration.nextDate})</p>
+                                                <div className="space-y-1">
+                                                    <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Calibration Status</p>
+                                                    <p className="text-base font-bold text-slate-900 dark:text-white leading-tight">{equipment.calibration.status} <span className="text-xs font-medium text-slate-400 underline decoration-emerald-200 underline-offset-4">Until {equipment.calibration.nextDate}</span></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -146,14 +153,14 @@ const EquipmentDetail: React.FC = () => {
                                 )}
 
                                 {activeTab === 'specs' && (
-                                    <div className="space-y-4 animate-in fade-in duration-300">
-                                        <div className="rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden">
+                                    <div className="animate-in fade-in slide-in-from-left-4 duration-500">
+                                        <div className="rounded-[2.5rem] border border-slate-100 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900 shadow-sm">
                                             <table className="w-full text-left">
                                                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                                                     {Object.entries(equipment.specs).map(([key, value]) => (
-                                                        <tr key={key} className="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-                                                            <td className="px-6 py-4 text-sm font-semibold text-slate-500 w-1/3">{key}</td>
-                                                            <td className="px-6 py-4 text-sm font-bold text-slate-800 dark:text-white">{value}</td>
+                                                        <tr key={key} className="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group">
+                                                            <td className="px-10 py-6 text-sm font-black text-slate-400 uppercase tracking-widest w-1/3 group-hover:text-blue-600 transition-colors">{key}</td>
+                                                            <td className="px-10 py-6 text-base font-bold text-slate-800 dark:text-white">{value}</td>
                                                         </tr>
                                                     ))}
                                                 </tbody>
@@ -163,19 +170,27 @@ const EquipmentDetail: React.FC = () => {
                                 )}
 
                                 {activeTab === 'availability' && (
-                                    <div className="p-12 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl flex flex-col items-center justify-center text-center space-y-4 animate-in fade-in duration-300">
-                                        <Calendar size={48} className="text-slate-300" />
-                                        <div>
-                                            <p className="text-lg font-bold text-slate-800 dark:text-white">Interactive Calendar View</p>
-                                            <p className="text-sm text-slate-500">Coming soon in the next update</p>
+                                    <div className="p-20 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-[3rem] flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in zoom-in-95 duration-500">
+                                        <div className="w-20 h-20 rounded-3xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-300">
+                                            <Calendar size={40} />
                                         </div>
+                                        <div className="space-y-2">
+                                            <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Booking Schedule</p>
+                                            <p className="text-slate-500 max-w-xs font-medium">Interactive timeline and reservation calendar view is currently under maintenance.</p>
+                                        </div>
+                                        <button className="px-6 py-3 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-200 transition-all">Contact Admin</button>
                                     </div>
                                 )}
 
                                 {activeTab === 'history' && (
-                                    <div className="flex flex-col items-center py-12 space-y-4 text-slate-400 animate-in fade-in duration-300">
-                                        <History size={48} />
-                                        <p className="text-sm font-medium">No recent maintenance records found.</p>
+                                    <div className="flex flex-col items-center py-20 space-y-6 text-slate-400 animate-in fade-in slide-in-from-top-4 duration-500">
+                                        <div className="w-20 h-20 rounded-3xl bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center">
+                                            <History size={40} />
+                                        </div>
+                                        <div className="text-center space-y-1">
+                                            <p className="text-lg font-bold text-slate-900 dark:text-white">Clean History</p>
+                                            <p className="text-xs uppercase tracking-widest font-black">No recent maintenance records found.</p>
+                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -184,74 +199,87 @@ const EquipmentDetail: React.FC = () => {
                 </div>
 
                 {/* Right Column: Quick Stats & Actions */}
-                <div className="space-y-6">
-                    <div className="bg-slate-900 text-white rounded-3xl p-8 space-y-6 overflow-hidden relative shadow-xl shadow-blue-200/20 dark:shadow-none transition-transform hover:-rotate-1">
-                        <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-blue-600 rounded-full blur-3xl opacity-20"></div>
-                        <h3 className="text-lg font-bold">Quick Verification</h3>
+                <div className="space-y-8">
+                    <div className="bg-slate-900 border border-slate-800 text-white rounded-[3rem] p-10 space-y-8 overflow-hidden relative shadow-2xl transition-all hover:shadow-blue-500/10 group">
+                        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-blue-600 rounded-full blur-3xl opacity-30 group-hover:opacity-40 transition-opacity"></div>
+                        <div className="relative space-y-6">
+                            <h3 className="text-xl font-bold tracking-tight">Quick Verification</h3>
+                            <div className="space-y-4">
+                                <div className="bg-white/5 backdrop-blur-md p-5 rounded-2xl flex justify-between items-center border border-white/10 group-hover:border-white/20 transition-all">
+                                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Serial Number</span>
+                                    <span className="text-sm font-bold font-mono text-blue-400">{equipment.serial}</span>
+                                </div>
+                                <div className="bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/10 space-y-4 group-hover:border-white/20 transition-all">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">System Health</span>
+                                        <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Optimized</span>
+                                    </div>
+                                    <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                                        <div className="w-3/4 h-full bg-gradient-to-r from-blue-600 to-emerald-400 rounded-full animate-pulse-slow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button className="w-full py-5 bg-white text-slate-900 rounded-[1.25rem] font-black shadow-lg hover:bg-slate-50 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 uppercase text-xs tracking-widest">
+                                <Calendar size={18} className="text-blue-600" />
+                                Request Access
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="premium-card rounded-[3rem] p-10 space-y-8 group relative overflow-hidden">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600">
+                                <QrCode size={24} />
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Asset Tag</h3>
+                        </div>
+                        <div className="relative">
+                            <div className="flex flex-col items-center gap-6 p-8 bg-slate-50 dark:bg-slate-800/50 rounded-[2.5rem] border-2 border-dashed border-slate-200 dark:border-slate-700 group-hover:border-blue-500/30 transition-all">
+                                <div className="p-6 bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 dark:shadow-none group-hover:scale-105 transition-transform duration-500 border border-slate-100">
+                                    <QRCodeCanvas
+                                        value={`labops://equipment/${id}`}
+                                        size={160}
+                                        level="H"
+                                        includeMargin={false}
+                                        fgColor="#1e293b"
+                                    />
+                                </div>
+                                <div className="space-y-2 text-center">
+                                    <p className="text-[11px] font-black text-slate-800 dark:text-white uppercase tracking-widest">SCAN TO SYNC</p>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest max-w-[180px] leading-relaxed">
+                                        Verify this asset on mobile device to unlock scanner features
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="premium-card rounded-[3rem] p-10 space-y-8">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Documents</h3>
+                            <button className="text-xs font-black text-blue-600 uppercase tracking-widest hover:underline">View All</button>
+                        </div>
                         <div className="space-y-4">
-                            <div className="bg-white/5 backdrop-blur-sm p-4 rounded-2xl flex justify-between items-center border border-white/10">
-                                <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">Serial Number</span>
-                                <span className="text-sm font-bold font-mono">{equipment.serial}</span>
-                            </div>
-                            <div className="bg-white/5 backdrop-blur-sm p-4 rounded-2xl border border-white/10 space-y-3">
-                                <div className="flex justify-between items-center">
-                                    <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">Ownership</span>
-                                    <span className="text-xs font-bold text-blue-400">ADMINISTRATOR</span>
-                                </div>
-                                <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                                    <div className="w-full h-full bg-blue-500"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <button className="w-full py-4 bg-white text-slate-900 rounded-2xl font-extrabold shadow-lg hover:bg-slate-50 transition-all flex items-center justify-center gap-2">
-                            <Calendar size={18} />
-                            REQUEST ACCESS
-                        </button>
-                    </div>
-
-                    <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 space-y-6 shadow-sm group">
-                        <div className="flex items-center gap-3">
-                            <QrCode size={20} className="text-blue-600" />
-                            <h3 className="text-lg font-bold text-slate-800 dark:text-white">Asset Tag</h3>
-                        </div>
-                        <div className="flex flex-col items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700">
-                            <div className="p-4 bg-white rounded-xl shadow-sm">
-                                <QRCodeCanvas
-                                    value={`labops://equipment/${id}`}
-                                    size={140}
-                                    level="H"
-                                    includeMargin={false}
-                                />
-                            </div>
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">
-                                Scan to view on mobile or verify asset
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 space-y-6 shadow-sm group">
-                        <h3 className="text-lg font-bold text-slate-800 dark:text-white">Documents</h3>
-                        <div className="space-y-3">
-                            <button className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all border border-transparent hover:border-blue-200 dark:hover:border-blue-800 group/item">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-white dark:bg-slate-900 rounded-lg flex items-center justify-center text-red-500 shadow-sm">PDF</div>
-                                    <div className="text-left">
-                                        <p className="text-sm font-bold text-slate-800 dark:text-white group-hover/item:text-blue-600">User Manual</p>
-                                        <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest">2.4 MB • PDF</p>
+                            {[
+                                { name: 'User Manual', type: 'PDF', size: '2.4 MB', color: 'text-red-500', icon: 'PDF' },
+                                { name: 'Safety Guide', type: 'PDF', size: '1.2 MB', color: 'text-amber-500', icon: 'DOC' },
+                                { name: 'Calibration Report', type: 'XLSX', size: '120 KB', color: 'text-emerald-500', icon: 'XLS' }
+                            ].map((doc, idx) => (
+                                <button key={idx} className="w-full flex items-center justify-between p-5 bg-slate-50 dark:bg-slate-800 rounded-[1.5rem] hover:bg-white dark:hover:bg-slate-700 transition-all border border-transparent hover:border-slate-100 dark:hover:border-slate-700 group/item hover:shadow-md">
+                                    <div className="flex items-center gap-4">
+                                        <div className={`w-12 h-12 bg-white dark:bg-slate-900 rounded-2xl flex items-center justify-center text-[11px] font-black ${doc.color} shadow-sm border border-slate-100 dark:border-slate-800`}>
+                                            {doc.icon}
+                                        </div>
+                                        <div className="text-left">
+                                            <p className="text-sm font-bold text-slate-900 dark:text-white group-hover/item:text-blue-600 transition-colors">{doc.name}</p>
+                                            <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest mt-0.5">{doc.size} • {doc.type}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <ExternalLink size={16} className="text-slate-400 group-hover/item:text-blue-600" />
-                            </button>
-                            <button className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all border border-transparent hover:border-blue-200 dark:hover:border-blue-800 group/item">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-white dark:bg-slate-900 rounded-lg flex items-center justify-center text-emerald-500 shadow-sm">XLS</div>
-                                    <div className="text-left">
-                                        <p className="text-sm font-bold text-slate-800 dark:text-white group-hover/item:text-blue-600">Calibration Data</p>
-                                        <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest">120 KB • XLSX</p>
+                                    <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-slate-400 group-hover/item:text-blue-600 group-hover/item:bg-blue-50 dark:group-hover/item:bg-blue-900/30 transition-all shadow-sm">
+                                        <ExternalLink size={14} />
                                     </div>
-                                </div>
-                                <ExternalLink size={16} className="text-slate-400 group-hover/item:text-blue-600" />
-                            </button>
+                                </button>
+                            ))}
                         </div>
                     </div>
                 </div>
