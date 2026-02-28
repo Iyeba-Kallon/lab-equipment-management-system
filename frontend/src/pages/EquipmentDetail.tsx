@@ -65,7 +65,7 @@ const EquipmentDetail: React.FC = () => {
                     <div className="premium-card rounded-[3rem] overflow-hidden bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/80 hover:border-blue-500/20 transition-all duration-500 shadow-2xl">
                         <div className="aspect-[21/9] w-full relative group overflow-hidden">
                             <img src={equipment.image} alt={equipment.name} className="w-full h-full object-cover transition-transform duration-1000 cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-110" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex items-end p-12">
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex items-end p-12 pointer-events-none">
                                 <div className="space-y-6 animate-reveal">
                                     <div className="flex items-center gap-3">
                                         <span className="px-4 py-2 bg-blue-600/90 backdrop-blur-3xl text-white rounded-2xl text-[9px] font-black uppercase tracking-[0.3em] shadow-2xl border border-white/10">{equipment.category}</span>
@@ -91,11 +91,17 @@ const EquipmentDetail: React.FC = () => {
                                 </div>
 
                                 <div className="flex items-center gap-5">
-                                    <button className="flex-1 lg:flex-none px-12 py-5 bg-blue-600 text-white rounded-[1.5rem] font-black tracking-[0.2em] shadow-2xl shadow-blue-500/30 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 transition-all text-[11px] uppercase group">
+                                    <button
+                                        onClick={() => alert(`Synchronizing resource scheduler for ${equipment.name}...`)}
+                                        className="flex-1 lg:flex-none px-12 py-5 bg-blue-600 text-white rounded-[1.5rem] font-black tracking-[0.2em] shadow-2xl shadow-blue-500/30 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 transition-all text-[11px] uppercase group cursor-pointer"
+                                    >
                                         Establish Booking
                                         <ArrowRight size={14} className="inline-block ml-3 group-hover:translate-x-1 transition-transform" />
                                     </button>
-                                    <button className="p-5 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-[1.5rem] hover:bg-white dark:hover:bg-slate-700 transition-all shadow-sm border border-slate-100 dark:border-slate-800 active:scale-95">
+                                    <button
+                                        onClick={() => alert('Displaying availability telemetry...')}
+                                        className="p-5 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-[1.5rem] hover:bg-white dark:hover:bg-slate-700 transition-all shadow-sm border border-slate-100 dark:border-slate-800 active:scale-95 cursor-pointer"
+                                    >
                                         <Calendar size={24} />
                                     </button>
                                 </div>
@@ -205,7 +211,7 @@ const EquipmentDetail: React.FC = () => {
                 {/* Right Column: Quick Stats & Actions */}
                 <div className="space-y-12">
                     <div className="bg-slate-950 border border-white/5 text-white rounded-[3.5rem] p-12 space-y-10 overflow-hidden relative shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all hover:shadow-blue-500/20 group">
-                        <div className="absolute top-0 right-0 -mr-24 -mt-24 w-64 h-64 bg-blue-600 rounded-full blur-[100px] opacity-20 group-hover:opacity-40 transition-opacity duration-1000"></div>
+                        <div className="absolute top-0 right-0 -mr-24 -mt-24 w-64 h-64 bg-blue-600 rounded-full blur-[100px] opacity-20 group-hover:opacity-40 transition-opacity duration-1000 pointer-events-none"></div>
                         <div className="relative space-y-8">
                             <div className="space-y-1">
                                 <h3 className="text-2xl font-black tracking-tight">Identity Hub</h3>
@@ -226,7 +232,10 @@ const EquipmentDetail: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                            <button className="w-full py-6 bg-white text-slate-950 rounded-3xl font-black shadow-2xl hover:bg-slate-50 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-4 uppercase text-[10px] tracking-[0.3em]">
+                            <button
+                                onClick={() => alert('Access permission request broadcasted to administrator.')}
+                                className="w-full py-6 bg-white text-slate-950 rounded-3xl font-black shadow-2xl hover:bg-slate-50 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-4 uppercase text-[10px] tracking-[0.3em] cursor-pointer"
+                            >
                                 <Calendar size={20} className="text-blue-600" />
                                 Reserve Terminal
                             </button>

@@ -32,10 +32,16 @@ const Dashboard: React.FC = () => {
                     <p className="text-slate-500 font-semibold text-lg">Real-time telemetry and resource management.</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <button className="px-6 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all shadow-sm active:scale-95">
+                    <button
+                        onClick={() => alert('Initiating dataset extraction protocol...')}
+                        className="px-6 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all shadow-sm active:scale-95 cursor-pointer"
+                    >
                         Export Dataset
                     </button>
-                    <button className="px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl shadow-blue-500/25 active:scale-95 group flex items-center gap-2">
+                    <button
+                        onClick={() => alert('Redirecting to secure booking interface...')}
+                        className="px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl shadow-blue-500/25 active:scale-95 group flex items-center gap-2 cursor-pointer"
+                    >
                         Execute Booking
                         <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -46,7 +52,7 @@ const Dashboard: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {stats.map((stat, index) => (
                     <div key={index} className="premium-card p-8 rounded-[2.5rem] group cursor-pointer relative overflow-hidden bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/50 hover:border-blue-500/30 transition-all duration-500 interactive-hover">
-                        <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${stat.color} blur-3xl -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700`}></div>
+                        <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${stat.color} blur-3xl -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700 pointer-events-none`}></div>
 
                         <div className="flex justify-between items-start mb-8 relative">
                             <div className={`p-4 rounded-2xl ${stat.iconBg} group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-sm border border-white/20 dark:border-slate-800`}>
@@ -129,7 +135,7 @@ const Dashboard: React.FC = () => {
 
                 {/* Recent Activity */}
                 <div className="premium-card rounded-[3rem] p-10 flex flex-col bg-slate-900 dark:bg-slate-900 dark:border-white/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[100px] -mr-32 -mt-32"></div>
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[100px] -mr-32 -mt-32 pointer-events-none"></div>
 
                     <div className="flex items-center justify-between mb-10 relative">
                         <div className="space-y-1">

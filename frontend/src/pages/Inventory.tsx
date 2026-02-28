@@ -38,7 +38,10 @@ const Inventory: React.FC = () => {
                     <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">Asset Repository</h1>
                     <p className="text-slate-500 font-semibold text-lg">Comprehensive inventory of precision laboratory instrumentation.</p>
                 </div>
-                <button className="flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-3xl transition-all hover:bg-blue-700 shadow-2xl shadow-blue-500/25 font-black text-[11px] uppercase tracking-widest group active:scale-95">
+                <button
+                    onClick={() => alert('Loading secure inventory registration gateway...')}
+                    className="flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-3xl transition-all hover:bg-blue-700 shadow-2xl shadow-blue-500/25 font-black text-[11px] uppercase tracking-widest group active:scale-95 cursor-pointer"
+                >
                     <Plus size={18} className="group-hover:rotate-90 transition-transform duration-500" />
                     <span>Register New Asset</span>
                 </button>
@@ -85,7 +88,7 @@ const Inventory: React.FC = () => {
                         <div key={item.id} className="premium-card rounded-[3rem] overflow-hidden group cursor-pointer flex flex-col h-full bg-gradient-to-b from-white to-slate-50/50 dark:from-slate-900 dark:to-slate-900/80 hover:border-blue-500/30 interactive-hover">
                             <div className="relative h-64 overflow-hidden">
                                 <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 cubic-bezier(0.16, 1, 0.3, 1)" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-40 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>
                                 <div className="absolute top-6 left-6">
                                     <span className={`px-4 py-2 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] border backdrop-blur-3xl shadow-2xl ${getStatusColor(item.status)}`}>
                                         {item.status}
@@ -107,12 +110,15 @@ const Inventory: React.FC = () => {
                                     {item.location}
                                 </div>
 
-                                <div className="pt-2 flex items-center justify-between gap-4">
-                                    <Link to={`/inventory/${item.id}`} className="flex-1 text-center py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-slate-200 dark:shadow-none">
+                                <div className="pt-2 flex items-center justify-between gap-4 relative z-10">
+                                    <Link to={`/inventory/${item.id}`} className="flex-1 text-center py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-slate-200 dark:shadow-none cursor-pointer">
                                         Data Profile
                                     </Link>
-                                    <button className="flex items-center justify-center p-4 text-blue-600 border border-blue-100 dark:border-blue-900/30 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all active:scale-90 shadow-sm shadow-blue-500/5">
-                                        <ArrowRight size={18} />
+                                    <button
+                                        onClick={(e) => { e.preventDefault(); alert(`Handshake initiated for ${item.name}`); }}
+                                        className="flex items-center justify-center p-4 text-blue-600 border border-blue-100 dark:border-blue-900/30 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all active:scale-90 shadow-sm shadow-blue-500/5 cursor-pointer"
+                                    >
+                                        <ArrowRight size={18} className="" />
                                     </button>
                                 </div>
                             </div>

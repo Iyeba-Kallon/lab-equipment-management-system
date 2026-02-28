@@ -23,6 +23,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [notificationsOpen, setNotificationsOpen] = useState(false);
 
     const menuItems = [
         { icon: <LayoutDashboard size={20} />, label: 'Dashboard', path: '/dashboard' },
@@ -119,10 +120,34 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         </div>
 
                         <div className="relative group">
-                            <button className="p-2.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all relative active:scale-90 group-hover:text-blue-600">
+                            <button 
+                                onClick={() => setNotificationsOpen(!notificationsOpen)}
+                                className="p-2.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all relative active:scale-90 group-hover:text-blue-600 cursor-pointer"
+                            >
                                 <Bell size={20} className="group-hover:rotate-[15deg] transition-transform" />
                                 <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900 animate-bounce"></span>
                             </button>
+
+                            {/* Notification Tray Placeholder */}
+                            {notificationsOpen && (
+                                <div className="absolute top-full right-0 mt-4 w-80 bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-slate-800 p-6 z-50 animate-reveal">
+                                    <div className="space-y-4">
+                                        <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4">
+                                            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Protocol Alerts</h4>
+                                            <span className="text-[10px] font-black text-blue-600 uppercase cursor-pointer hover:underline">Clear All</span>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <div className="flex gap-4 items-start p-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-2xl transition-all cursor-pointer group/notif">
+                                                <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0 group-hover/notif:scale-150 transition-transform"></div>
+                                                <div className="space-y-1">
+                                                    <p className="text-xs font-bold text-slate-800 dark:text-white">Calibration Due: Tektronix DPO7000</p>
+                                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">2 hours remaining</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <Link to="/profile" className="flex items-center gap-3 pl-6 border-l border-slate-200 dark:border-slate-800 group interactive-hover">
