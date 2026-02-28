@@ -1,6 +1,6 @@
 from flask import Flask
-from backend.config import DevelopmentConfig
-from backend.app.extensions import db, migrate, jwt, cors
+from config import DevelopmentConfig
+from app.extensions import db, migrate, jwt, cors
 
 def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
@@ -13,7 +13,7 @@ def create_app(config_class=DevelopmentConfig):
     cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
 
     # Register blueprints
-    from backend.app.routes import auth, equipment, reservations, calibrations, analytics, users
+    from app.routes import auth, equipment, reservations, calibrations, analytics, users
     app.register_blueprint(auth.bp)
     app.register_blueprint(equipment.bp)
     app.register_blueprint(reservations.bp)

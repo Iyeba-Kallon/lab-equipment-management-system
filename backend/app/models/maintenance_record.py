@@ -1,4 +1,4 @@
-from backend.app.extensions import db
+from app.extensions import db
 
 class MaintenanceRecord(db.Model):
     __tablename__ = 'maintenance_records'
