@@ -8,8 +8,10 @@ import {
     List,
     MoreVertical,
     ExternalLink,
-    MapPin
+    MapPin,
+    ArrowRight
 } from 'lucide-react';
+import { useModal } from '../context/ModalContext';
 
 const mockEquipment = [
     { id: 1, name: 'Oscilloscope DPO7000', category: 'Oscilloscope', manufacturer: 'Tektronix', model: 'DPO7024', status: 'Available', location: 'Lab A, Bench 4', image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=400' },
@@ -19,6 +21,7 @@ const mockEquipment = [
 ];
 
 const Inventory: React.FC = () => {
+    const { openBookingModal } = useModal();
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
     const getStatusColor = (status: string) => {
@@ -31,51 +34,50 @@ const Inventory: React.FC = () => {
     };
 
     return (
-        <div className="space-y-12 page-reveal">
+        <div className="space-y-8 page-fade">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-slate-200/50 dark:border-slate-800/50 pb-10">
-                <div className="space-y-1">
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">Asset Repository</h1>
-                    <p className="text-slate-500 font-semibold text-lg">Comprehensive inventory of precision laboratory instrumentation.</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-slate-200 dark:border-slate-800 pb-10">
+                <div>
+                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Equipment Inventory</h1>
+                    <p className="text-slate-500 font-medium">Manage and monitor laboratory instrumentation.</p>
                 </div>
                 <button
-                    onClick={() => alert('Loading secure inventory registration gateway...')}
-                    className="flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-3xl transition-all hover:bg-blue-700 shadow-2xl shadow-blue-500/25 font-black text-[11px] uppercase tracking-widest group active:scale-95 cursor-pointer"
+                    onClick={openBookingModal}
+                    className="btn-primary flex items-center gap-2"
                 >
-                    <Plus size={18} className="group-hover:rotate-90 transition-transform duration-500" />
-                    <span>Register New Asset</span>
+                    <Plus size={18} />
+                    <span>New Booking</span>
                 </button>
             </div>
 
             {/* Search and Actions */}
-            <div className="flex flex-col lg:flex-row gap-6 justify-between items-center glass-morphism p-8 rounded-[2.5rem] shadow-sm border border-slate-200/50 dark:border-white/5">
-                <div className="relative w-full lg:max-w-xl group">
-                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-blue-600 transition-colors" size={20} />
+            <div className="flex flex-col lg:flex-row gap-4 justify-between items-center standard-card p-4">
+                <div className="relative w-full lg:max-w-xl">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                     <input
                         type="text"
-                        placeholder="Filter by nomenclature, category, or serial..."
-                        className="w-full pl-14 pr-8 py-4.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 rounded-2xl focus:ring-8 focus:ring-blue-500/5 focus:border-blue-500/50 outline-none transition-all font-bold text-slate-800 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600"
+                        placeholder="Search equipment..."
+                        className="w-full pl-12 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                     />
                 </div>
 
-                <div className="flex items-center gap-6 w-full lg:w-auto">
-                    <button className="flex-1 lg:flex-none flex items-center justify-center gap-3 px-6 py-4.5 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 rounded-2xl transition-all border border-slate-200/60 dark:border-slate-800/60 shadow-sm font-black text-[11px] uppercase tracking-widest hover:border-blue-500/20 active:scale-95">
+                <div className="flex items-center gap-4 w-full lg:w-auto">
+                    <button className="flex-1 lg:flex-none btn-secondary flex items-center gap-2">
                         <Filter size={18} />
-                        <span>Analysis Filters</span>
+                        <span>Filters</span>
                     </button>
-                    <div className="h-10 w-px bg-slate-200 dark:bg-slate-800 mx-2 hidden lg:block opacity-50"></div>
-                    <div className="flex bg-slate-100/80 dark:bg-slate-800/80 p-1.5 rounded-2xl border border-slate-200/50 dark:border-slate-700/50">
+                    <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg border border-slate-200 dark:border-slate-700">
                         <button
                             onClick={() => setViewMode('grid')}
-                            className={`p-2.5 rounded-xl transition-all ${viewMode === 'grid' ? 'bg-white dark:bg-slate-700 shadow-xl text-blue-600' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                            className={`p-2 rounded-md transition-all ${viewMode === 'grid' ? 'bg-white dark:bg-slate-700 shadow text-blue-600' : 'text-slate-500'}`}
                         >
-                            <LayoutGrid size={20} />
+                            <LayoutGrid size={18} />
                         </button>
                         <button
                             onClick={() => setViewMode('list')}
-                            className={`p-2.5 rounded-xl transition-all ${viewMode === 'list' ? 'bg-white dark:bg-slate-700 shadow-xl text-blue-600' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                            className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-white dark:bg-slate-700 shadow text-blue-600' : 'text-slate-500'}`}
                         >
-                            <List size={20} />
+                            <List size={18} />
                         </button>
                     </div>
                 </div>
@@ -202,13 +204,5 @@ const Inventory: React.FC = () => {
         </div>
     );
 };
-
-const ArrowRight = ({ size, className }: { size: number, className: string }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-        <polyline points="12 5 19 12 12 19"></polyline>
-    </svg>
-);
-
 
 export default Inventory;

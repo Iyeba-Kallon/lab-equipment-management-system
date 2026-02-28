@@ -12,8 +12,10 @@ import {
     ArrowRight,
     User
 } from 'lucide-react';
+import { useModal } from '../context/ModalContext';
 
 const Reservations: React.FC = () => {
+    const { openBookingModal } = useModal();
     const [filter, setFilter] = useState('all');
 
     const reservations = [
@@ -76,28 +78,28 @@ const Reservations: React.FC = () => {
     };
 
     return (
-        <div className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000 font-['Outfit']">
+        <div className="space-y-8 page-fade">
             {/* Header & Actions */}
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 bg-white dark:bg-slate-900/50 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/20 dark:shadow-none relative overflow-hidden group">
-                <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl group-hover:bg-blue-600/10 transition-colors duration-1000"></div>
-
-                <div className="space-y-4 relative z-10">
-                    <div className="inline-flex px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] border border-blue-100 dark:border-blue-800">Operational Log</div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Reservations</h1>
-                    <p className="text-slate-500 dark:text-slate-400 font-medium text-lg">Detailed history and upcoming equipment allocations.</p>
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border-b border-slate-200 dark:border-slate-800 pb-8">
+                <div>
+                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Reservations</h1>
+                    <p className="text-slate-500 font-medium">History and upcoming equipment allocations.</p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto relative z-10">
-                    <div className="relative flex-1 min-w-[200px]">
+                <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+                    <div className="relative flex-1 min-w-[240px]">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                         <input
                             type="text"
-                            placeholder="Find a reservation..."
-                            className="w-full pl-12 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border border-transparent focus:border-blue-500/30 rounded-2xl outline-none focus:ring-4 focus:ring-blue-500/5 font-bold text-sm transition-all"
+                            placeholder="Search reservations..."
+                            className="w-full pl-12 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
                         />
                     </div>
-                    <button className="flex items-center gap-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 rounded-2xl font-black shadow-2xl hover:bg-slate-800 dark:hover:bg-slate-100 hover:scale-[1.02] active:scale-95 transition-all text-xs uppercase tracking-widest shrink-0">
-                        <Plus size={20} />
+                    <button
+                        onClick={openBookingModal}
+                        className="btn-primary flex items-center gap-2"
+                    >
+                        <Plus size={18} />
                         New Booking
                     </button>
                 </div>
