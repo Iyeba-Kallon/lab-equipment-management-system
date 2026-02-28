@@ -5,17 +5,17 @@
   font-family: 'Outfit', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;
   font-weight: 400;
-  
+
   color-scheme: light dark;
-  
+
   /* Modern HSL Palette - Refined */
   --primary-base: 221 83%;
   --primary: var(--primary-base) 53%;
   --primary-glow: var(--primary-base) 53% / 20%;
-  
+
   --secondary-base: 161 72%;
   --secondary: var(--secondary-base) 44%;
-  
+
   --accent-base: 262 83%;
   --accent: var(--accent-base) 58%;
 
@@ -35,34 +35,57 @@
   --color-secondary: hsl(161 72% 44%);
   --color-secondary-light: hsl(161 72% 96%);
   --color-accent: hsl(262 83% 58%);
-  
+
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
   --radius-3xl: 2rem;
   --radius-4xl: 3rem;
-  
+
   --shadow-premium: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
   --shadow-premium-hover: 0 20px 40px -15px rgba(0, 0, 0, 0.12);
   --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.15);
-  
+
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;
   --animate-reveal: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes pulse-slow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.05); }
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
 }
 
 @keyframes reveal {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 ::selection {
@@ -76,6 +99,10 @@ body {
   min-height: 100vh;
   @apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 antialiased overflow-x-hidden;
   scroll-behavior: smooth;
+}
+
+button {
+  @apply cursor-pointer;
 }
 
 /* Glassmorphism Utilities */
