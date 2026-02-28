@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from backend.app.models.user import User
+from app.models.user import User
 from flask_jwt_extended import jwt_required
 
 bp = Blueprint('users', __name__, url_prefix='/api/users')

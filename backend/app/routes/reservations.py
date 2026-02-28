@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
-from backend.app.models.reservation import Reservation
-from backend.app.extensions import db
+from app.models.reservation import Reservation
+from app.extensions import db
 from flask_jwt_extended import jwt_required
 
 bp = Blueprint('reservations', __name__, url_prefix='/api/reservations')

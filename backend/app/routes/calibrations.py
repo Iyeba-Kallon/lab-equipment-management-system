@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
-from backend.app.models.calibration import Calibration
-from backend.app.extensions import db
+from app.models.calibration import Calibration
+from app.extensions import db
 
 bp = Blueprint('calibrations', __name__, url_prefix='/api/calibrations')
 

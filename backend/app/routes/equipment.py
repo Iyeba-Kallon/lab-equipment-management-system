@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
-from backend.app.models.equipment import Equipment
-from backend.app.extensions import db, jwt
+from app.models.equipment import Equipment
+from app.extensions import db, jwt
 from flask_jwt_extended import jwt_required
 
 bp = Blueprint('equipment', __name__, url_prefix='/api/equipment')
