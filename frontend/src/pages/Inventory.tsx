@@ -23,54 +23,54 @@ const Inventory: React.FC = () => {
 
     const getStatusColor = (status: string) => {
         switch (status) {
-            case 'Available': return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-200/50';
-            case 'In Use': return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200/50';
-            case 'Calibration': return 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400 border-orange-200/50';
-            default: return 'bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-400 border-slate-200/50';
+            case 'Available': return 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-100 dark:border-emerald-800/50';
+            case 'In Use': return 'bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 border-blue-100 dark:border-blue-800/50';
+            case 'Calibration': return 'bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400 border-orange-100 dark:border-orange-800/50';
+            default: return 'bg-slate-50 text-slate-600 dark:bg-slate-900/30 dark:text-slate-400 border-slate-100 dark:border-slate-800/50';
         }
     };
 
     return (
-        <div className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        <div className="space-y-12 page-reveal">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Equipment Inventory</h1>
-                    <p className="text-slate-500 mt-1 font-medium">Manage and track all laboratory assets in one place.</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-slate-200/50 dark:border-slate-800/50 pb-10">
+                <div className="space-y-1">
+                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">Asset Repository</h1>
+                    <p className="text-slate-500 font-semibold text-lg">Comprehensive inventory of precision laboratory instrumentation.</p>
                 </div>
-                <button className="flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 text-white rounded-2xl transition-all hover:bg-blue-700 shadow-lg shadow-blue-500/25 font-bold group">
-                    <Plus size={20} className="group-hover:rotate-90 transition-transform duration-300" />
-                    <span>Add New Equipment</span>
+                <button className="flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-3xl transition-all hover:bg-blue-700 shadow-2xl shadow-blue-500/25 font-black text-[11px] uppercase tracking-widest group active:scale-95">
+                    <Plus size={18} className="group-hover:rotate-90 transition-transform duration-500" />
+                    <span>Register New Asset</span>
                 </button>
             </div>
 
             {/* Search and Actions */}
-            <div className="flex flex-col lg:flex-row gap-6 justify-between items-center glass-morphism p-6 rounded-[2rem] shadow-sm">
+            <div className="flex flex-col lg:flex-row gap-6 justify-between items-center glass-morphism p-8 rounded-[2.5rem] shadow-sm border border-slate-200/50 dark:border-white/5">
                 <div className="relative w-full lg:max-w-xl group">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors" size={20} />
+                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-blue-600 transition-colors" size={20} />
                     <input
                         type="text"
-                        placeholder="Search by name, category, or model..."
-                        className="w-full pl-12 pr-6 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500/50 outline-none transition-all font-medium text-slate-700 dark:text-slate-200"
+                        placeholder="Filter by nomenclature, category, or serial..."
+                        className="w-full pl-14 pr-8 py-4.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 rounded-2xl focus:ring-8 focus:ring-blue-500/5 focus:border-blue-500/50 outline-none transition-all font-bold text-slate-800 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600"
                     />
                 </div>
 
-                <div className="flex items-center gap-4 w-full lg:w-auto">
-                    <button className="flex-1 lg:flex-none flex items-center justify-center gap-2 px-5 py-3.5 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 rounded-2xl transition-all border border-slate-200/60 dark:border-slate-800/60 shadow-sm hover:shadow-md font-bold">
+                <div className="flex items-center gap-6 w-full lg:w-auto">
+                    <button className="flex-1 lg:flex-none flex items-center justify-center gap-3 px-6 py-4.5 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 rounded-2xl transition-all border border-slate-200/60 dark:border-slate-800/60 shadow-sm font-black text-[11px] uppercase tracking-widest hover:border-blue-500/20 active:scale-95">
                         <Filter size={18} />
-                        <span>Filters</span>
+                        <span>Analysis Filters</span>
                     </button>
-                    <div className="h-10 w-[1px] bg-slate-200 dark:bg-slate-800 mx-2 hidden lg:block"></div>
-                    <div className="flex bg-slate-100/80 dark:bg-slate-800/80 p-1.5 rounded-2xl">
+                    <div className="h-10 w-px bg-slate-200 dark:bg-slate-800 mx-2 hidden lg:block opacity-50"></div>
+                    <div className="flex bg-slate-100/80 dark:bg-slate-800/80 p-1.5 rounded-2xl border border-slate-200/50 dark:border-slate-700/50">
                         <button
                             onClick={() => setViewMode('grid')}
-                            className={`p-2 rounded-xl transition-all ${viewMode === 'grid' ? 'bg-white dark:bg-slate-700 shadow-md text-blue-600' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                            className={`p-2.5 rounded-xl transition-all ${viewMode === 'grid' ? 'bg-white dark:bg-slate-700 shadow-xl text-blue-600' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-200'}`}
                         >
                             <LayoutGrid size={20} />
                         </button>
                         <button
                             onClick={() => setViewMode('list')}
-                            className={`p-2 rounded-xl transition-all ${viewMode === 'list' ? 'bg-white dark:bg-slate-700 shadow-md text-blue-600' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                            className={`p-2.5 rounded-xl transition-all ${viewMode === 'list' ? 'bg-white dark:bg-slate-700 shadow-xl text-blue-600' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-200'}`}
                         >
                             <List size={20} />
                         </button>
@@ -80,39 +80,39 @@ const Inventory: React.FC = () => {
 
             {/* Grid View */}
             {viewMode === 'grid' ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
                     {mockEquipment.map((item) => (
-                        <div key={item.id} className="premium-card rounded-[2.5rem] overflow-hidden group cursor-pointer flex flex-col h-full bg-gradient-to-b from-white to-slate-50/30 dark:from-slate-900 dark:to-slate-900/50">
-                            <div className="relative h-56 overflow-hidden">
-                                <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                <div className="absolute top-5 left-5">
-                                    <span className={`px-3 py-1.5 rounded-xl text-[10px] font-extrabold uppercase tracking-widest border backdrop-blur-md ${getStatusColor(item.status)}`}>
+                        <div key={item.id} className="premium-card rounded-[3rem] overflow-hidden group cursor-pointer flex flex-col h-full bg-gradient-to-b from-white to-slate-50/50 dark:from-slate-900 dark:to-slate-900/80 hover:border-blue-500/30 interactive-hover">
+                            <div className="relative h-64 overflow-hidden">
+                                <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 cubic-bezier(0.16, 1, 0.3, 1)" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
+                                <div className="absolute top-6 left-6">
+                                    <span className={`px-4 py-2 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] border backdrop-blur-3xl shadow-2xl ${getStatusColor(item.status)}`}>
                                         {item.status}
                                     </span>
                                 </div>
                             </div>
-                            <div className="p-6 flex flex-col flex-1 space-y-5">
-                                <div className="flex-1">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <span className="text-[10px] font-extrabold text-blue-600 uppercase tracking-[0.2em]">{item.category}</span>
-                                        <button className="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors p-1"><MoreVertical size={18} /></button>
+                            <div className="p-8 flex flex-col flex-1 space-y-6">
+                                <div className="flex-1 space-y-3">
+                                    <div className="flex justify-between items-start">
+                                        <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.3em]">{item.category}</span>
+                                        <button className="text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors p-1 active:scale-90"><MoreVertical size={18} /></button>
                                     </div>
-                                    <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight group-hover:text-blue-600 transition-colors">{item.name}</h3>
-                                    <p className="text-xs text-slate-500 mt-2 font-medium">{item.manufacturer} • {item.model}</p>
+                                    <h3 className="text-2xl font-black text-slate-900 dark:text-white leading-[1.2] group-hover:text-blue-600 transition-colors tracking-tight">{item.name}</h3>
+                                    <p className="text-[11px] text-slate-400 font-bold uppercase tracking-widest">{item.manufacturer} <span className="mx-2 opacity-30">|</span> {item.model}</p>
                                 </div>
 
-                                <div className="flex items-center gap-3 py-3 px-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-xs font-bold">
-                                    <MapPin size={16} className="text-blue-500" />
+                                <div className="flex items-center gap-4 py-4 px-5 bg-white dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-white/5 text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-widest shadow-sm">
+                                    <MapPin size={16} className="text-blue-500 opacity-70" />
                                     {item.location}
                                 </div>
 
-                                <div className="pt-2 flex items-center justify-between gap-3">
-                                    <Link to={`/inventory/${item.id}`} className="flex-1 text-center py-3 text-blue-600 text-xs font-extrabold uppercase tracking-wider rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all border border-blue-100 dark:border-blue-900/30">
-                                        Details
+                                <div className="pt-2 flex items-center justify-between gap-4">
+                                    <Link to={`/inventory/${item.id}`} className="flex-1 text-center py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-slate-200 dark:shadow-none">
+                                        Data Profile
                                     </Link>
-                                    <button className="flex-1 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-extrabold uppercase tracking-wider hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-slate-200 dark:shadow-none">
-                                        Reserve
+                                    <button className="flex items-center justify-center p-4 text-blue-600 border border-blue-100 dark:border-blue-900/30 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all active:scale-90 shadow-sm shadow-blue-500/5">
+                                        <ArrowRight size={18} />
                                     </button>
                                 </div>
                             </div>
@@ -120,52 +120,52 @@ const Inventory: React.FC = () => {
                     ))}
                 </div>
             ) : (
-                <div className="premium-card rounded-[2.5rem] overflow-hidden">
+                <div className="premium-card rounded-[3rem] overflow-hidden border border-slate-200/50 dark:border-white/5 shadow-2xl">
                     <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse min-w-[800px]">
+                        <table className="w-full text-left border-collapse min-w-[1000px]">
                             <thead>
-                                <tr className="border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
-                                    <th className="px-8 py-5 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Equipment Asset</th>
-                                    <th className="px-8 py-5 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Category</th>
-                                    <th className="px-8 py-5 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Status</th>
-                                    <th className="px-8 py-5 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Location</th>
-                                    <th className="px-8 py-5 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest text-right">Actions</th>
+                                <tr className="border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-slate-800/20">
+                                    <th className="px-10 py-7 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Asset Nomenclature</th>
+                                    <th className="px-10 py-7 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Department</th>
+                                    <th className="px-10 py-7 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Validation</th>
+                                    <th className="px-10 py-7 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Location Hub</th>
+                                    <th className="px-10 py-7 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Operations</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                                 {mockEquipment.map((item) => (
-                                    <tr key={item.id} className="hover:bg-blue-50/30 dark:hover:bg-blue-900/5 transition-colors group">
-                                        <td className="px-8 py-5">
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-14 h-14 rounded-2xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200 dark:border-slate-800 shadow-sm group-hover:scale-105 transition-transform">
+                                    <tr key={item.id} className="hover:bg-blue-50/40 dark:hover:bg-blue-900/10 transition-all group">
+                                        <td className="px-10 py-7">
+                                            <div className="flex items-center gap-6">
+                                                <div className="w-16 h-16 rounded-[1.25rem] overflow-hidden bg-slate-100 shrink-0 border border-slate-200 dark:border-slate-800 shadow-2xl group-hover:scale-110 transition-transform duration-500">
                                                     <img src={item.image} alt="" className="w-full h-full object-cover" />
                                                 </div>
-                                                <div>
-                                                    <p className="text-[15px] font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">{item.name}</p>
-                                                    <p className="text-[11px] text-slate-500 font-bold uppercase tracking-wide mt-0.5">{item.manufacturer} • {item.model}</p>
+                                                <div className="space-y-1">
+                                                    <p className="text-lg font-black text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors tracking-tight">{item.name}</p>
+                                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{item.manufacturer} • {item.model}</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-8 py-5">
-                                            <span className="text-xs font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg">{item.category}</span>
+                                        <td className="px-10 py-7">
+                                            <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-4 py-2 rounded-xl border border-slate-200/50 dark:border-slate-700 uppercase tracking-widest">{item.category}</span>
                                         </td>
-                                        <td className="px-8 py-5">
-                                            <span className={`px-3 py-1.5 rounded-xl text-[10px] font-extrabold uppercase tracking-widest border ${getStatusColor(item.status)}`}>
+                                        <td className="px-10 py-7">
+                                            <span className={`px-4 py-2 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] border shadow-sm ${getStatusColor(item.status)}`}>
                                                 {item.status}
                                             </span>
                                         </td>
-                                        <td className="px-8 py-5">
-                                            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-bold">
-                                                <MapPin size={14} className="text-blue-500" />
+                                        <td className="px-10 py-7">
+                                            <div className="flex items-center gap-3 text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest">
+                                                <MapPin size={16} className="text-blue-500 opacity-60" />
                                                 {item.location}
                                             </div>
                                         </td>
-                                        <td className="px-8 py-5 text-right">
-                                            <div className="flex items-center justify-end gap-2">
-                                                <Link to={`/inventory/${item.id}`} className="p-3 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-all">
+                                        <td className="px-10 py-7 text-right">
+                                            <div className="flex items-center justify-end gap-3">
+                                                <Link to={`/inventory/${item.id}`} className="p-3.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-2xl transition-all active:scale-90 border border-transparent hover:border-blue-500/20 shadow-sm">
                                                     <ExternalLink size={20} />
                                                 </Link>
-                                                <button className="p-3 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all">
+                                                <button className="p-3.5 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/80 rounded-2xl transition-all active:scale-90 border border-transparent hover:border-slate-300 dark:hover:border-slate-600 shadow-sm">
                                                     <MoreVertical size={20} />
                                                 </button>
                                             </div>
@@ -175,12 +175,20 @@ const Inventory: React.FC = () => {
                             </tbody>
                         </table>
                     </div>
-                    <div className="p-6 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center text-xs font-bold text-slate-500">
-                        <span>Showing {mockEquipment.length} items</span>
-                        <div className="flex gap-2">
-                            <button className="px-4 py-2 hover:bg-white dark:hover:bg-slate-700 rounded-lg transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-600 cursor-not-allowed opacity-50">Previous</button>
-                            <button className="px-4 py-2 bg-white dark:bg-slate-700 rounded-lg transition-all border border-slate-200 dark:border-slate-600 shadow-sm text-blue-600">1</button>
-                            <button className="px-4 py-2 hover:bg-white dark:hover:bg-slate-700 rounded-lg transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-600">Next</button>
+                    <div className="p-10 bg-slate-50/50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-white/5 flex flex-col sm:flex-row justify-between items-center gap-6">
+                        <div className="flex flex-col items-center sm:items-start space-y-1">
+                            <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Asset Count</span>
+                            <p className="text-sm font-black text-slate-900 dark:text-white">Showing <span className="text-blue-600">{mockEquipment.length}</span> individual items</p>
+                        </div>
+                        <div className="flex gap-4">
+                            <button className="px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white dark:hover:bg-slate-800 rounded-xl transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-700 cursor-not-allowed opacity-30">Archive</button>
+                            <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200/50 dark:border-slate-700">
+                                <button className="px-5 py-2.5 bg-white dark:bg-slate-700 rounded-lg shadow-xl text-blue-600 text-[10px] font-black">01</button>
+                                <button className="px-5 py-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg text-[10px] font-black transition-colors">02</button>
+                            </div>
+                            <button className="px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white dark:hover:bg-slate-800 rounded-xl transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-700 active:scale-95 group flex items-center gap-2">
+                                Forward <ArrowRight size={14} className="opacity-50 group-hover:translate-x-1 transition-all" />
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -188,5 +196,13 @@ const Inventory: React.FC = () => {
         </div>
     );
 };
+
+const ArrowRight = ({ size, className }: { size: number, className: string }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+    </svg>
+);
+
 
 export default Inventory;
