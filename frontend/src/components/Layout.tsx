@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import BookingModal from './BookingModal';
 import {
     LayoutDashboard,
     Box,
@@ -24,6 +25,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [notificationsOpen, setNotificationsOpen] = useState(false);
+    const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
     const menuItems = [
         { icon: <LayoutDashboard size={20} />, label: 'Dashboard', path: '/dashboard' },
@@ -90,7 +92,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
                 <div className="absolute bottom-8 w-full px-4 space-y-2">
                     <div className="h-px bg-slate-100 dark:bg-slate-800 mx-4 mb-4 opacity-50"></div>
-                    <NavLink to="/profile" className={({ isActive }) => `w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group ${isActive ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25' : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                    <NavLink to="/settings" className={({ isActive }) => `w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group ${isActive ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25' : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
                         <Settings size={20} className="group-hover:rotate-45 transition-transform" />
                         {isSidebarOpen && <span className="text-sm font-semibold">Settings</span>}
                     </NavLink>
@@ -120,7 +122,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         </div>
 
                         <div className="relative group">
-                            <button 
+                            <button
                                 onClick={() => setNotificationsOpen(!notificationsOpen)}
                                 className="p-2.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all relative active:scale-90 group-hover:text-blue-600 cursor-pointer"
                             >
@@ -163,9 +165,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </header>
 
                 {/* Page Content */}
-                <div className="p-8 max-w-[1600px] mx-auto page-reveal">
+                <div className="p-8 max-w-[1600px] mx-auto page-fade">
                     {children}
                 </div>
+
+                <BookingModal
+                    isOpen={isBookingModalOpen}
+                    onClose={() => setIsBookingModalOpen(false)}
+                />
             </main>
         </div>
     );
