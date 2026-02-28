@@ -6,10 +6,13 @@ import {
     Users,
     CheckCircle2,
     Clock,
-    Activity
+    Activity,
+    ArrowRight
 } from 'lucide-react';
+import { useModal } from '../context/ModalContext';
 
 const Dashboard: React.FC = () => {
+    const { openBookingModal } = useModal();
     const stats = [
         { label: 'Total Equipment', value: '124', icon: <Box className="text-blue-600" />, trend: '+12%', color: 'from-blue-500/20 to-indigo-600/5', iconBg: 'bg-blue-100 dark:bg-blue-900/30' },
         { label: 'Active Bookings', value: '18', icon: <Calendar className="text-emerald-600" />, trend: '+5%', color: 'from-emerald-500/20 to-teal-600/5', iconBg: 'bg-emerald-100 dark:bg-emerald-900/30' },
@@ -24,47 +27,44 @@ const Dashboard: React.FC = () => {
     ];
 
     return (
-        <div className="space-y-12 page-reveal">
+        <div className="space-y-8 page-fade">
             {/* Page Header */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-slate-200/50 dark:border-slate-800/50 pb-8">
-                <div className="space-y-1">
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">System Intelligence</h1>
-                    <p className="text-slate-500 font-semibold text-lg">Real-time telemetry and resource management.</p>
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-slate-200 dark:border-slate-800 pb-8">
+                <div>
+                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Dashboard Overlook</h1>
+                    <p className="text-slate-500 font-medium">Real-time resource management and system status.</p>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                     <button
-                        onClick={() => alert('Initiating dataset extraction protocol...')}
-                        className="px-6 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all shadow-sm active:scale-95 cursor-pointer"
+                        className="btn-secondary"
                     >
-                        Export Dataset
+                        Export Data
                     </button>
                     <button
-                        onClick={() => alert('Redirecting to secure booking interface...')}
-                        className="px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl shadow-blue-500/25 active:scale-95 group flex items-center gap-2 cursor-pointer"
+                        onClick={openBookingModal}
+                        className="btn-primary flex items-center gap-2"
                     >
-                        Execute Booking
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        New Booking
+                        <ArrowRight size={16} />
                     </button>
                 </div>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, index) => (
-                    <div key={index} className="premium-card p-8 rounded-[2.5rem] group cursor-pointer relative overflow-hidden bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/50 hover:border-blue-500/30 transition-all duration-500 interactive-hover">
-                        <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${stat.color} blur-3xl -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700 pointer-events-none`}></div>
-
-                        <div className="flex justify-between items-start mb-8 relative">
-                            <div className={`p-4 rounded-2xl ${stat.iconBg} group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-sm border border-white/20 dark:border-slate-800`}>
+                    <div key={index} className="standard-card p-6 hover:border-blue-500/50 transition-colors group">
+                        <div className="flex justify-between items-start mb-4">
+                            <div className={`p-3 rounded-lg ${stat.iconBg}`}>
                                 {stat.icon}
                             </div>
-                            <span className={`text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border ${index === 2 ? 'bg-orange-50 text-orange-600 border-orange-100 dark:bg-orange-900/30 dark:text-orange-400 dark:border-orange-800/50' : 'bg-emerald-50 text-emerald-600 border-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800/50'}`}>
+                            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded">
                                 {stat.trend}
                             </span>
                         </div>
-                        <div className="relative space-y-1">
-                            <h3 className="text-slate-400 dark:text-slate-500 text-[10px] font-black tracking-[0.2em] uppercase">{stat.label}</h3>
-                            <p className="text-4xl font-black text-slate-900 dark:text-white tabular-nums tracking-tighter">{stat.value}</p>
+                        <div>
+                            <p className="text-sm font-medium text-slate-500 uppercase tracking-wider">{stat.label}</p>
+                            <p className="text-3xl font-bold text-slate-900 dark:text-white mt-1">{stat.value}</p>
                         </div>
                     </div>
                 ))}
@@ -181,12 +181,5 @@ const Dashboard: React.FC = () => {
         </div>
     );
 };
-
-const ArrowRight = ({ size, className }: { size: number, className: string }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-        <polyline points="12 5 19 12 12 19"></polyline>
-    </svg>
-);
 
 export default Dashboard;
