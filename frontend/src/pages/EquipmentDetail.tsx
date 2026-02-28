@@ -9,8 +9,7 @@ import {
     FileText,
     ExternalLink,
     ShieldCheck,
-    QrCode,
-    ArrowRight
+    QrCode
 } from 'lucide-react';
 import { QRCodeCanvas } from 'qrcode.react';
 import { useModal } from '../context/ModalContext';
@@ -86,8 +85,8 @@ const EquipmentDetail: React.FC = () => {
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id)}
                                         className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.id
-                                                ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm'
-                                                : 'text-slate-500 hover:text-slate-700'
+                                            ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm'
+                                            : 'text-slate-500 hover:text-slate-700'
                                             }`}
                                     >
                                         {tab.icon}
