@@ -16,16 +16,18 @@ import {
     Wrench,
     QrCode
 } from 'lucide-react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
+import { useModal } from '../context/ModalContext';
 
 interface LayoutProps {
     children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+    const { isBookingModalOpen, closeBookingModal } = useModal();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [notificationsOpen, setNotificationsOpen] = useState(false);
-    const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+    const location = useLocation();
 
     const menuItems = [
         { icon: <LayoutDashboard size={20} />, label: 'Dashboard', path: '/dashboard' },
@@ -107,11 +109,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <main className={`flex-1 ${isSidebarOpen ? 'ml-72' : 'ml-24'} transition-all duration-500 cubic-bezier(0.4, 0, 0.2, 1)`}>
                 {/* Navbar */}
                 <header className="h-20 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between px-10 sticky top-0 z-40 transition-all duration-300">
-                    <div className="flex flex-col animate-reveal">
-                        <h2 className="text-xl font-bold text-slate-800 dark:text-white tracking-tight">Overview</h2>
+                    <div className="flex flex-col">
+                        <h2 className="text-xl font-bold text-slate-800 dark:text-white tracking-tight">
+                            {location.pathname.split('/').pop()?.charAt(0).toUpperCase()}{location.pathname.split('/').pop()?.slice(1) || 'Overview'}
+                        </h2>
                         <div className="flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">System Operational</p>
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Active Session</p>
                         </div>
                     </div>
 
@@ -165,13 +169,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </header>
 
                 {/* Page Content */}
-                <div className="p-8 max-w-[1600px] mx-auto page-fade">
+                <div className="p-8 max-w-7xl mx-auto page-fade">
                     {children}
                 </div>
 
                 <BookingModal
                     isOpen={isBookingModalOpen}
-                    onClose={() => setIsBookingModalOpen(false)}
+                    onClose={closeBookingModal}
                 />
             </main>
         </div>
