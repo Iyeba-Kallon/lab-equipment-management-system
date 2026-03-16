@@ -1,4 +1,3 @@
-```javascript
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, ArrowRight, ShieldCheck, Activity } from 'lucide-react';
@@ -157,4 +156,3 @@ const Login: React.FC = () => {
 };
 
 export default Login;
-```
