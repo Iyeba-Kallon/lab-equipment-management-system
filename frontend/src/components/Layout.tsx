@@ -16,8 +16,7 @@ import {
     Wrench,
     QrCode,
     Search,
-    ChevronRight,
-    ArrowRight
+    ChevronRight
 } from 'lucide-react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useModal } from '../context/ModalContext';
