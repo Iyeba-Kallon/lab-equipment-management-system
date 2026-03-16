@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserPlus, Mail, Lock, User, Building2, ArrowRight, Activity, ShieldCheck } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, Building2, ArrowRight, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Register: React.FC = () => {
@@ -169,5 +169,4 @@ const Register: React.FC = () => {
     );
 };
 
-export default Register;
 export default Register;

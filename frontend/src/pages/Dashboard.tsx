@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    Box,
     Calendar,
     AlertCircle,
     Users,
@@ -43,7 +42,7 @@ const Dashboard: React.FC = () => {
     const item = {
         hidden: { opacity: 0, y: 20 },
         show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
-    };
+    } as const;
 
     return (
         <motion.div 
