@@ -14,10 +14,14 @@ import {
     Activity,
     BarChart3,
     Wrench,
-    QrCode
+    QrCode,
+    Search,
+    ChevronRight,
+    ArrowRight
 } from 'lucide-react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useModal } from '../context/ModalContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -41,43 +45,51 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     ];
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex transition-colors duration-500 font-['Outfit'] selection:bg-blue-500/10 selection:text-blue-600">
+        <div className="min-h-screen flex bg-slate-50 dark:bg-[#07090e] transition-colors duration-500 font-['Outfit'] selection:bg-primary/10 selection:text-primary">
             {/* Sidebar */}
-            <aside
-                className={`${isSidebarOpen ? 'w-72' : 'w-24'
-                    } bg-white dark:bg-slate-900 border-r border-slate-200/60 dark:border-slate-800/60 transition-all duration-500 cubic-bezier(0.4, 0, 0.2, 1) fixed h-full z-50 shadow-xl shadow-slate-200/20 dark:shadow-none overflow-hidden`}
+            <motion.aside
+                initial={false}
+                animate={{ width: isSidebarOpen ? 288 : 96 }}
+                className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-2xl border-r border-white/40 dark:border-white/5 fixed h-full z-50 shadow-premium overflow-hidden flex flex-col"
             >
                 <div className="p-8 flex items-center justify-between">
-                    {isSidebarOpen && (
-                        <div className="flex items-center gap-3 group cursor-pointer animate-reveal">
-                            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/30 group-hover:scale-105 group-hover:rotate-6 transition-all duration-300">
-                                L
-                            </div>
-                            <span className="font-bold text-2xl tracking-tighter text-slate-800 dark:text-white">LabOps</span>
-                        </div>
-                    )}
+                    <AnimatePresence mode="wait">
+                        {isSidebarOpen && (
+                            <motion.div 
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                className="flex items-center gap-3 group cursor-pointer"
+                            >
+                                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-blue-500/30 group-hover:scale-105 group-hover:rotate-6 transition-all duration-300">
+                                    L
+                                </div>
+                                <span className="font-black text-2xl tracking-tighter text-slate-800 dark:text-white">LabOps</span>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        className="p-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all border border-slate-100 dark:border-slate-800 shadow-sm text-slate-500 hover:text-blue-600 active:scale-95"
+                        className="p-2.5 hover:bg-white dark:hover:bg-white/5 rounded-xl transition-all border border-slate-100 dark:border-white/5 shadow-sm text-slate-500 hover:text-primary active:scale-95"
                     >
                         {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
                     </button>
                 </div>
 
-                <nav className="mt-6 px-4 space-y-2 overflow-y-auto max-h-[calc(100vh-250px)] custom-scrollbar">
+                <nav className="mt-6 px-4 space-y-2 overflow-y-auto flex-1 custom-scrollbar">
                     {menuItems.map((item, index) => (
                         <NavLink
                             key={index}
                             to={item.path}
                             className={({ isActive }) => `flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group relative ${isActive
-                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25 translate-x-1'
-                                : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-slate-400 font-medium hover:translate-x-1'
+                                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 translate-x-1'
+                                : 'text-slate-500 hover:bg-white/50 dark:hover:bg-white/5 dark:text-slate-400 font-bold hover:translate-x-1'
                                 }`}
                         >
                             <div className={`transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 ${isSidebarOpen ? '' : 'mx-auto'}`}>
                                 {item.icon}
                             </div>
-                            {isSidebarOpen && <span className="text-sm tracking-wide font-semibold">{item.label}</span>}
+                            {isSidebarOpen && <span className="text-sm tracking-wide font-black">{item.label}</span>}
                             {!isSidebarOpen && (
                                 <div className="absolute left-full ml-4 px-3 py-2 bg-slate-900 text-white text-xs rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-[60] shadow-xl">
                                     {item.label}
@@ -85,91 +97,110 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             )}
                             {isSidebarOpen && (
                                 <div className="absolute right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <ArrowRight size={14} className="text-current opacity-50" />
+                                    <ChevronRight size={14} className="text-current opacity-50" />
                                 </div>
                             )}
                         </NavLink>
                     ))}
                 </nav>
 
-                <div className="absolute bottom-8 w-full px-4 space-y-2">
-                    <div className="h-px bg-slate-100 dark:bg-slate-800 mx-4 mb-4 opacity-50"></div>
-                    <NavLink to="/settings" className={({ isActive }) => `w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group ${isActive ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25' : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800'}`}>
+                <div className="p-4 space-y-2 mt-auto">
+                    <div className="h-px bg-slate-100 dark:bg-white/5 mx-4 mb-4"></div>
+                    <NavLink to="/settings" className={({ isActive }) => `flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group ${isActive ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:bg-white/50 dark:hover:bg-white/5'}`}>
                         <Settings size={20} className="group-hover:rotate-45 transition-transform" />
-                        {isSidebarOpen && <span className="text-sm font-semibold">Settings</span>}
+                        {isSidebarOpen && <span className="text-sm font-black">Settings</span>}
                     </NavLink>
                     <button className="w-full flex items-center gap-4 px-4 py-3.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-2xl transition-all duration-300 group">
                         <LogOut size={20} className="group-hover:-translate-x-1 transition-transform" />
-                        {isSidebarOpen && <span className="text-sm font-semibold">Logout</span>}
+                        {isSidebarOpen && <span className="text-sm font-black">Logout</span>}
                     </button>
                 </div>
-            </aside>
+            </motion.aside>
 
             {/* Main Content */}
-            <main className={`flex-1 ${isSidebarOpen ? 'ml-72' : 'ml-24'} transition-all duration-500 cubic-bezier(0.4, 0, 0.2, 1)`}>
+            <motion.main 
+                animate={{ marginLeft: isSidebarOpen ? 288 : 96 }}
+                className="flex-1 transition-all duration-500 overflow-hidden"
+            >
                 {/* Navbar */}
-                <header className="h-20 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between px-10 sticky top-0 z-40 transition-all duration-300">
+                <header className="h-24 bg-white/40 dark:bg-slate-900/20 backdrop-blur-xl border-b border-white/40 dark:border-white/5 flex items-center justify-between px-10 sticky top-0 z-40">
                     <div className="flex flex-col">
-                        <h2 className="text-xl font-bold text-slate-800 dark:text-white tracking-tight">
+                        <h2 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">
                             {location.pathname.split('/').pop()?.charAt(0).toUpperCase()}{location.pathname.split('/').pop()?.slice(1) || 'Overview'}
                         </h2>
                         <div className="flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Active Session</p>
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Active Research Hive</p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-6">
-                        <div className="hidden sm:flex items-center bg-slate-100 dark:bg-slate-800/50 p-1 rounded-xl border border-slate-200/50 dark:border-slate-700/50">
-                            <button className="px-4 py-1.5 text-[10px] font-black uppercase tracking-wider bg-white dark:bg-slate-700 text-blue-600 rounded-lg shadow-sm transition-all">Quick Search</button>
-                            <span className="px-3 text-[10px] font-bold text-slate-400">⌘K</span>
+                        <div className="hidden lg:flex items-center bg-white/50 dark:bg-white/5 px-4 py-2 rounded-2xl border border-slate-200/50 dark:border-white/5 group focus-within:ring-2 ring-primary/20 transition-all">
+                            <Search size={16} className="text-slate-400 group-hover:text-primary transition-colors" />
+                            <input 
+                                type="text" 
+                                placeholder="Universal Search..." 
+                                className="bg-transparent border-none focus:ring-0 text-sm font-bold ml-3 w-48 placeholder:text-slate-400"
+                            />
+                            <span className="text-[10px] font-black text-slate-400 bg-white dark:bg-white/5 px-2 py-1 rounded-lg ml-3">⌘K</span>
                         </div>
 
                         <div className="relative group">
                             <button
                                 onClick={() => setNotificationsOpen(!notificationsOpen)}
-                                className="p-2.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all relative active:scale-90 group-hover:text-blue-600 cursor-pointer"
+                                className="p-3 text-slate-500 hover:bg-white dark:hover:bg-white/5 rounded-2xl transition-all relative active:scale-90 group-hover:text-primary"
                             >
                                 <Bell size={20} className="group-hover:rotate-[15deg] transition-transform" />
-                                <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900 animate-bounce"></span>
+                                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
                             </button>
 
-                            {/* Notification Tray Placeholder */}
-                            {notificationsOpen && (
-                                <div className="absolute top-full right-0 mt-4 w-80 bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-slate-800 p-6 z-50 animate-reveal">
-                                    <div className="space-y-4">
-                                        <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4">
-                                            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Protocol Alerts</h4>
-                                            <span className="text-[10px] font-black text-blue-600 uppercase cursor-pointer hover:underline">Clear All</span>
-                                        </div>
-                                        <div className="space-y-4">
-                                            <div className="flex gap-4 items-start p-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-2xl transition-all cursor-pointer group/notif">
-                                                <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0 group-hover/notif:scale-150 transition-transform"></div>
-                                                <div className="space-y-1">
-                                                    <p className="text-xs font-bold text-slate-800 dark:text-white">Calibration Due: Tektronix DPO7000</p>
-                                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">2 hours remaining</p>
-                                                </div>
+                            <AnimatePresence>
+                                {notificationsOpen && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                        className="absolute top-full right-0 mt-4 w-96 glass-floating p-8 z-50 overflow-hidden"
+                                    >
+                                        <div className="space-y-6">
+                                            <div className="flex justify-between items-center border-b border-slate-100 dark:border-white/5 pb-4">
+                                                <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Protocol Alerts</h4>
+                                                <button className="text-[10px] font-black text-primary uppercase cursor-pointer hover:underline tracking-widest">Acknowledge All</button>
+                                            </div>
+                                            <div className="space-y-4 max-h-[400px] overflow-y-auto custom-scrollbar pr-2">
+                                                {[1, 2].map((i) => (
+                                                    <div key={i} className="flex gap-4 items-start p-4 hover:bg-white/50 dark:hover:bg-white/5 rounded-[1.5rem] transition-all cursor-pointer group/notif border border-transparent hover:border-slate-100 dark:hover:border-white/5">
+                                                        <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0">
+                                                            <Activity size={18} className="text-blue-500" />
+                                                        </div>
+                                                        <div className="space-y-1">
+                                                            <p className="text-sm font-black text-slate-800 dark:text-white group-hover/notif:text-primary transition-colors">Calibration Sync Required</p>
+                                                            <p className="text-xs text-slate-500 font-bold leading-relaxed">Tektronix DPO7000 requires precision adjustment within 48 hours.</p>
+                                                            <p className="text-[10px] text-slate-400 font-black uppercase mt-2 tracking-tighter">14 mins ago</p>
+                                                        </div>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            )}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
 
-                        <Link to="/profile" className="flex items-center gap-3 pl-6 border-l border-slate-200 dark:border-slate-800 group interactive-hover">
+                        <Link to="/profile" className="flex items-center gap-4 pl-6 border-l border-slate-200 dark:border-white/10 group">
                             <div className="text-right hidden md:block">
-                                <p className="text-sm font-black text-slate-800 dark:text-white group-hover:text-blue-600 transition-colors">Alpha Kallon</p>
-                                <p className="text-[10px] uppercase tracking-widest text-slate-400 font-black">Lead Researcher</p>
+                                <p className="text-sm font-black text-slate-800 dark:text-white group-hover:text-primary transition-colors">Lead Researcher</p>
+                                <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black">Alpha Kallon</p>
                             </div>
-                            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden ring-2 ring-blue-500/0 group-hover:ring-blue-500/20 transition-all duration-300">
-                                <User size={22} className="group-hover:scale-110 transition-transform" />
+                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-white/5 dark:to-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10 shadow-sm overflow-hidden group-hover:scale-105 transition-all duration-300">
+                                <User size={24} className="group-hover:text-primary transition-colors" />
                             </div>
                         </Link>
                     </div>
                 </header>
 
                 {/* Page Content */}
-                <div className="p-8 max-w-7xl mx-auto page-fade">
+                <div className="p-8 lg:p-12 max-w-[1600px] mx-auto min-h-[calc(100vh-6rem)]">
                     {children}
                 </div>
 
@@ -177,17 +208,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     isOpen={isBookingModalOpen}
                     onClose={closeBookingModal}
                 />
-            </main>
+            </motion.main>
         </div>
     );
 };
 
-const ArrowRight = ({ size, className }: { size: number, className: string }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-        <polyline points="12 5 19 12 12 19"></polyline>
-    </svg>
-);
-
-
 export default Layout;
+
