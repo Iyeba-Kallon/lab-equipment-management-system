@@ -7,17 +7,21 @@ import {
     CheckCircle2,
     Clock,
     Activity,
-    ArrowRight
+    ArrowRight,
+    TrendingUp,
+    Shield,
+    Zap
 } from 'lucide-react';
 import { useModal } from '../context/ModalContext';
+import { motion } from 'framer-motion';
 
 const Dashboard: React.FC = () => {
     const { openBookingModal } = useModal();
     const stats = [
-        { label: 'Total Equipment', value: '124', icon: <Box className="text-blue-600" />, trend: '+12%', color: 'from-blue-500/20 to-indigo-600/5', iconBg: 'bg-blue-100 dark:bg-blue-900/30' },
-        { label: 'Active Bookings', value: '18', icon: <Calendar className="text-emerald-600" />, trend: '+5%', color: 'from-emerald-500/20 to-teal-600/5', iconBg: 'bg-emerald-100 dark:bg-emerald-900/30' },
-        { label: 'Pending Calibration', value: '4', icon: <AlertCircle className="text-orange-600" />, trend: 'Due soon', color: 'from-orange-500/20 to-amber-600/5', iconBg: 'bg-orange-100 dark:bg-orange-900/30' },
-        { label: 'Total Users', value: '32', icon: <Users className="text-purple-600" />, trend: '+2 new', color: 'from-purple-500/20 to-fuchsia-600/5', iconBg: 'bg-purple-100 dark:bg-purple-900/30' },
+        { label: 'Infrastructure', value: '124', icon: <Shield size={22} className="text-blue-500" />, trend: '+12%', color: 'from-blue-500 to-indigo-600', sub: 'Units Online' },
+        { label: 'Active Syncs', value: '18', icon: <Zap size={22} className="text-emerald-500" />, trend: '+5%', color: 'from-emerald-500 to-teal-600', sub: 'Reservations' },
+        { label: 'Alert Level', value: 'Low', icon: <AlertCircle size={22} className="text-orange-500" />, trend: 'Stable', color: 'from-orange-500 to-amber-600', sub: 'Maintenance' },
+        { label: 'Personnel', value: '32', icon: <Users size={22} className="text-purple-500" />, trend: 'Active', color: 'from-purple-500 to-fuchsia-600', sub: 'Authenticated' },
     ];
 
     const recentActivity = [
@@ -26,145 +30,183 @@ const Dashboard: React.FC = () => {
         { user: 'Engineering Lab', action: 'scheduled maintenance for Spectrum Analyzer', time: 'Yesterday', status: 'Pending', icon: <Clock size={16} className="text-orange-500" /> },
     ];
 
+    const container = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
+    };
+
+    const item = {
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+    };
+
     return (
-        <div className="space-y-8 page-fade">
-            {/* Page Header */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-slate-200 dark:border-slate-800 pb-8">
-                <div>
-                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Dashboard Overlook</h1>
-                    <p className="text-slate-500 font-medium">Real-time resource management and system status.</p>
+        <motion.div 
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="space-y-12"
+        >
+            {/* Header Section */}
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+                <div className="space-y-3">
+                    <motion.div variants={item} className="flex items-center gap-2">
+                        <TrendingUp size={16} className="text-primary" />
+                        <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">System Intelligence</span>
+                    </motion.div>
+                    <motion.h1 variants={item} className="text-5xl font-black text-slate-800 dark:text-white tracking-tighter">
+                        Command Central
+                    </motion.h1>
+                    <motion.p variants={item} className="text-slate-500 font-bold max-w-lg leading-relaxed">
+                        Orchestrating laboratory resources and infrastructure telemetry in real-time.
+                    </motion.p>
                 </div>
-                <div className="flex items-center gap-3">
-                    <button
-                        className="btn-secondary"
-                    >
-                        Export Data
+                <motion.div variants={item} className="flex items-center gap-4">
+                    <button className="btn-secondary group">
+                        Telemetry Export
                     </button>
                     <button
                         onClick={openBookingModal}
-                        className="btn-primary flex items-center gap-2"
+                        className="btn-primary flex items-center gap-3 group"
                     >
-                        New Booking
-                        <ArrowRight size={16} />
+                        Initialize Protocol
+                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                     </button>
-                </div>
+                </motion.div>
             </div>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, index) => (
-                    <div key={index} className="standard-card p-6 hover:border-blue-500/50 transition-colors group">
-                        <div className="flex justify-between items-start mb-4">
-                            <div className={`p-3 rounded-lg ${stat.iconBg}`}>
+                    <motion.div 
+                        key={index} 
+                        variants={item}
+                        className="premium-card p-8 group relative overflow-hidden"
+                    >
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br opacity-0 group-hover:opacity-10 transition-opacity duration-500 -mr-12 -mt-12 rounded-full blur-2xl"></div>
+                        <div className="flex justify-between items-start mb-6">
+                            <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-white/5 flex items-center justify-center transition-transform group-hover:scale-110 group-hover:rotate-6">
                                 {stat.icon}
                             </div>
-                            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded">
+                            <span className="text-[9px] font-black text-primary bg-primary/10 px-3 py-1.5 rounded-full uppercase tracking-widest transition-all group-hover:bg-primary group-hover:text-white">
                                 {stat.trend}
                             </span>
                         </div>
-                        <div>
-                            <p className="text-sm font-medium text-slate-500 uppercase tracking-wider">{stat.label}</p>
-                            <p className="text-3xl font-bold text-slate-900 dark:text-white mt-1">{stat.value}</p>
+                        <div className="space-y-1">
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{stat.label}</p>
+                            <div className="flex items-baseline gap-2">
+                                <p className="text-4xl font-black text-slate-800 dark:text-white tracking-tighter">{stat.value}</p>
+                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">{stat.sub}</p>
+                            </div>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                {/* Main Analytics Chart Area */}
-                <div className="lg:col-span-2 premium-card rounded-[3rem] p-10 relative overflow-hidden flex flex-col">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-6">
+                {/* Infrastructure Load Visualization */}
+                <motion.div variants={item} className="lg:col-span-2 premium-card p-10 relative overflow-hidden flex flex-col group/chart shadow-glass">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-6 relative z-10">
                         <div className="space-y-1">
-                            <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Infrastructure Load</h3>
-                            <p className="text-sm text-slate-500 font-semibold">Average utilization metrics across core departments</p>
+                            <h3 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">Infrastructure Pulse</h3>
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Average Load Intensity per Sector</p>
                         </div>
-                        <div className="flex bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200/50 dark:border-slate-700/50 whitespace-nowrap overflow-x-auto">
-                            {['7 Days', '30 Days', '90 Days'].map((period, i) => (
-                                <button key={period} className={`px-5 py-2 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${i === 0 ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-md' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'}`}>
+                        <div className="flex bg-slate-100 dark:bg-white/5 p-1.5 rounded-2xl border border-slate-200/50 dark:border-white/5">
+                            {['24h', '7d', '30d'].map((period, i) => (
+                                <button key={period} className={`px-5 py-2 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${i === 1 ? 'bg-white dark:bg-slate-700 text-primary shadow-lg shadow-blue-500/20' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'}`}>
                                     {period}
                                 </button>
                             ))}
                         </div>
                     </div>
 
-                    {/* Styled Bar Chart Visualization */}
-                    <div className="h-80 flex items-end justify-between gap-6 px-4">
+                    {/* Enhanced Bar Chart */}
+                    <div className="h-96 flex items-end justify-between gap-4 px-4 relative z-10 mt-4">
                         {[40, 75, 45, 95, 65, 85, 55].map((val, i) => (
-                            <div key={i} className="flex-1 flex flex-col items-center gap-4 group cursor-pointer h-full justify-end">
-                                <div className="w-full relative flex items-end justify-center group-hover:h-[110%] transition-all duration-500 h-full">
-                                    <div className="w-full bg-slate-50 dark:bg-slate-800/20 rounded-[1.25rem] absolute inset-0 border border-slate-100 dark:border-slate-800/50 group-hover:bg-blue-50 group-hover:border-blue-100 transition-colors"></div>
-                                    <div
-                                        className="w-full bg-gradient-to-t from-blue-600 via-blue-500 to-indigo-400 rounded-[1.25rem] relative transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) group-hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] group-hover:scale-y-[1.02] shadow-sm overflow-hidden"
-                                        style={{ height: `${val}%` }}
+                            <div key={i} className="flex-1 flex flex-col items-center gap-6 group/bar cursor-pointer h-full justify-end">
+                                <div className="w-full relative flex items-end justify-center h-full">
+                                    <div className="w-full bg-slate-50 dark:bg-white/5 rounded-3xl absolute inset-0 border border-slate-100 dark:border-white/5 group-hover/bar:bg-white dark:group-hover/bar:bg-white/10 transition-colors duration-500"></div>
+                                    <motion.div
+                                        initial={{ height: 0 }}
+                                        animate={{ height: `${val}%` }}
+                                        transition={{ delay: 0.5 + i * 0.1, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                                        className="w-full bg-gradient-to-t from-blue-600 via-indigo-600 to-primary rounded-3xl relative shadow-lg group-hover/bar:scale-x-105 transition-transform duration-500"
                                     >
-                                        <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.1)_50%,rgba(255,255,255,0.1)_75%,transparent_75%,transparent)] bg-[length:20px_20px] opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                                        <div className="absolute top-4 left-1/2 -translate-x-1/2 text-white text-[10px] font-black opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.2),transparent)] opacity-50"></div>
+                                        <div className="absolute top-6 left-1/2 -translate-x-1/2 text-white text-[10px] font-black opacity-0 group-hover/bar:opacity-100 transition-all duration-300 transform translate-y-2 group-hover/bar:translate-y-0">
                                             {val}%
                                         </div>
-                                    </div>
+                                    </motion.div>
 
-                                    {/* Tooltip */}
-                                    <div className="absolute -top-14 left-1/2 -translate-x-1/2 glass-morphism text-slate-800 dark:text-white text-[10px] font-black px-4 py-2 rounded-2xl opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 whitespace-nowrap shadow-2xl z-10 border-blue-500/20 pointer-events-none translate-y-2 group-hover:translate-y-0">
-                                        <div className="flex flex-col items-center">
-                                            <span>{['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][i]}</span>
-                                            <span className="text-blue-600">{val}% Load Intensity</span>
+                                    {/* Glass Tooltip */}
+                                    <div className="absolute -top-16 left-1/2 -translate-x-1/2 glass-floating border border-primary/20 text-slate-800 dark:text-white text-[10px] font-black px-6 py-3 rounded-2xl opacity-0 scale-90 group-hover/bar:opacity-100 group-hover/bar:scale-100 transition-all duration-300 whitespace-nowrap z-20 shadow-2xl pointer-events-none translate-y-4 group-hover/bar:translate-y-0">
+                                        <div className="flex flex-col items-center gap-1">
+                                            <span className="uppercase tracking-[0.2em]">{['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][i]}</span>
+                                            <span className="text-primary text-xs font-black">{val}% Utilization</span>
                                         </div>
                                     </div>
                                 </div>
-                                <span className="text-[10px] font-black text-slate-400 group-hover:text-blue-600 transition-colors uppercase tracking-[0.2em]">{['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][i]}</span>
+                                <span className="text-[10px] font-black text-slate-400 group-hover/bar:text-primary transition-colors uppercase tracking-[0.2em]">{['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][i]}</span>
                             </div>
                         ))}
                     </div>
 
-                    <div className="mt-12 pt-10 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-6">
-                        <div className="flex items-center gap-8">
-                            <div className="flex items-center gap-3">
-                                <span className="w-3 h-3 rounded-full bg-blue-500 shadow-sm"></span>
-                                <span className="text-slate-500 font-bold text-xs uppercase tracking-widest">Core Instrumentation</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <span className="w-3 h-3 rounded-full bg-indigo-200 dark:bg-indigo-900 shadow-sm"></span>
-                                <span className="text-slate-500 font-bold text-xs uppercase tracking-widest">Auxiliary Units</span>
-                            </div>
+                    <div className="mt-16 pt-10 border-t border-slate-100 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-8 relative z-10">
+                        <div className="flex items-center gap-10">
+                            {[
+                                { label: 'Mainframe', color: 'bg-blue-500' },
+                                { label: 'Quantum Clusters', color: 'bg-indigo-300 dark:bg-indigo-900' }
+                            ].map((tag, idx) => (
+                                <div key={idx} className="flex items-center gap-3">
+                                    <span className={`w-3 h-3 rounded-full ${tag.color} shadow-sm group-hover/chart:scale-150 transition-transform duration-500`}></span>
+                                    <span className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">{tag.label}</span>
+                                </div>
+                            ))}
                         </div>
-                        <button className="text-blue-600 font-black text-[11px] uppercase tracking-widest hover:text-blue-700 transition-all flex items-center gap-2 group border-b-2 border-blue-500/10 hover:border-blue-500 pb-1">
-                            Telemetry Report <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        <button className="text-primary font-black text-[10px] uppercase tracking-[0.3em] hover:text-indigo-600 transition-all flex items-center gap-3 group/btn">
+                            Detailed Intelligence Report <ArrowRight size={16} className="group-hover/btn:translate-x-2 transition-transform" />
                         </button>
                     </div>
-                </div>
+                </motion.div>
 
-                {/* Recent Activity */}
-                <div className="premium-card rounded-[3rem] p-10 flex flex-col bg-slate-900 dark:bg-slate-900 dark:border-white/5 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[100px] -mr-32 -mt-32 pointer-events-none"></div>
+                {/* Event Log / Recent Activity */}
+                <motion.div variants={item} className="premium-card p-10 flex flex-col bg-slate-900 dark:bg-black/40 relative overflow-hidden group/events shadow-premium">
+                    <div className="absolute top-0 right-0 w-80 h-80 bg-primary/20 blur-[100px] -mr-40 -mt-40 pointer-events-none transition-all duration-700 group-hover/events:scale-150 opacity-50"></div>
 
-                    <div className="flex items-center justify-between mb-10 relative">
+                    <div className="flex items-center justify-between mb-12 relative z-10">
                         <div className="space-y-1">
-                            <h3 className="text-2xl font-black text-white tracking-tight">Event Log</h3>
-                            <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">Real-time status updates</p>
+                            <h3 className="text-2xl font-black text-white tracking-tight">Event Stream</h3>
+                            <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest">Real-time status feed</p>
                         </div>
-                        <div className="p-3 bg-white/5 rounded-2xl border border-white/5 text-slate-400 group-hover:text-blue-400 transition-colors">
-                            <Activity size={20} />
+                        <div className="p-3.5 bg-white/5 rounded-2xl border border-white/5 text-slate-400 group-hover/events:text-primary transition-all duration-500 group-hover/events:rotate-[15deg]">
+                            <Activity size={24} />
                         </div>
                     </div>
 
-                    <div className="space-y-10 flex-1 relative">
+                    <div className="space-y-12 flex-1 relative z-10">
                         {recentActivity.map((act, i) => (
-                            <div key={i} className="flex gap-6 group/item cursor-pointer relative">
+                            <div key={i} className="flex gap-8 group/item cursor-pointer relative">
                                 {i !== recentActivity.length - 1 && (
-                                    <div className="absolute left-[22px] top-12 bottom-[-40px] w-px bg-white/5 group-hover/item:bg-blue-500/20 transition-colors"></div>
+                                    <div className="absolute left-7 top-14 bottom-[-48px] w-px bg-white/5 group-hover/item:bg-primary/30 transition-colors"></div>
                                 )}
-                                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-blue-500/20 group-hover/item:border-blue-500/30 transition-all duration-500 group-hover/item:scale-110 shadow-2xl">
-                                    {act.icon}
+                                <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center shrink-0 group-hover/item:bg-primary/20 group-hover/item:border-primary/40 transition-all duration-500 group-hover/item:scale-110 shadow-2xl relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-primary opacity-0 group-hover/item:opacity-20 blur-xl"></div>
+                                    <div className="relative z-10">{act.icon}</div>
                                 </div>
-                                <div className="space-y-2 pt-1">
-                                    <p className="text-sm text-slate-400 font-semibold leading-relaxed group-hover/item:text-slate-200 transition-colors">
+                                <div className="space-y-2 pt-2">
+                                    <p className="text-sm text-slate-400 font-bold leading-relaxed group-hover/item:text-slate-100 transition-colors">
                                         <span className="text-white font-black">{act.user}</span> {act.action}
                                     </p>
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-4">
                                         <span className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">{act.time}</span>
                                         <span className="w-1 h-1 rounded-full bg-slate-700"></span>
                                         <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${act.status === 'Completed' ? 'text-emerald-400' :
-                                            act.status === 'Pending' ? 'text-orange-400' : 'text-blue-400'
+                                            act.status === 'Pending' ? 'text-orange-400' : 'text-primary'
                                             }`}>{act.status}</span>
                                     </div>
                                 </div>
@@ -172,14 +214,15 @@ const Dashboard: React.FC = () => {
                         ))}
                     </div>
 
-                    <button className="w-full mt-12 py-5 text-[11px] font-black uppercase tracking-[0.3em] text-white hover:bg-white/5 rounded-[1.5rem] transition-all border border-white/5 hover:border-white/10 shadow-2xl active:scale-[0.98] group flex items-center justify-center gap-2">
-                        System History
-                        <ArrowRight size={14} className="opacity-50 group-hover:translate-x-1 group-hover:opacity-100 transition-all" />
+                    <button className="w-full mt-12 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white hover:bg-white/5 rounded-3xl transition-all border border-white/5 hover:border-white/10 shadow-2xl active:scale-[0.98] group flex items-center justify-center gap-4">
+                        Comprehensive History
+                        <ArrowRight size={18} className="opacity-50 group-hover:translate-x-2 group-hover:opacity-100 transition-all" />
                     </button>
-                </div>
+                </motion.div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
 export default Dashboard;
+
