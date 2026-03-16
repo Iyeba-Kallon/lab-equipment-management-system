@@ -23,7 +23,7 @@ const Register: React.FC = () => {
                 <motion.div 
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, cubicBezier: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     className="relative z-20 space-y-12"
                 >
                     <div className="flex items-center gap-4 group">
